@@ -115,6 +115,14 @@ body.locked > :not(#login):not(#toast){visibility:hidden}
 .status.busy .dot{background:#8FB4FF;animation:pulse 1s ease-in-out infinite}
 .status.off .dot{background:var(--bad)}
 @keyframes pulse{50%{opacity:.35}}
+/* Captura y análisis en solo lectura (usuarios sin permiso de edición) */
+.ro-banner{display:flex;gap:10px;align-items:center;background:#FFF8E5;border:1px solid #F1D48A;color:#5C4A12;border-radius:var(--radius);padding:10px 14px;font-size:13px}
+.ro-banner[hidden]{display:none}
+.ro-banner b{color:#3E3209}
+.ro-mode input.cell{cursor:default;background:transparent!important}
+.ro-mode .grid td.in{background:#fff}
+.ro-mode .stepper{opacity:.55}
+.actions [hidden],.hist-tools [hidden]{display:none!important}
 /* ======================= 4. LAYOUT ======================= */
 main{max-width:1440px;margin:0 auto;padding:22px 28px 60px;display:grid;gap:22px}
 
@@ -223,7 +231,60 @@ table.grid{border-collapse:separate;border-spacing:0;width:100%;min-width:1080px
 main[hidden]{display:none}
 main > *,#pipeRegions > *{min-width:0}  /* evita que tablas anchas desborden la página */
 /* ---------- Pipeline Proyectos Ancla ---------- */
-#viewPipeline{max-width:none}
+#viewPipeline,#viewPlaza{max-width:none}
+.pztable{border-collapse:collapse;width:100%;min-width:1100px;font-size:13.5px;font-variant-numeric:tabular-nums}
+.pztable thead th{background:var(--navy);color:#fff;font-size:12px;font-weight:600;padding:10px 12px;text-align:right;white-space:nowrap}
+.pztable thead th small{display:block;font-weight:400;font-size:10.5px;opacity:.85}
+.pztable thead th:nth-child(-n+2){text-align:left}
+.pztable thead th.grp{background:var(--navy-2);text-align:center}
+.pztable td{padding:7px 12px;border-bottom:1px solid var(--line-soft);text-align:right;white-space:nowrap}
+.pztable td:nth-child(-n+2){text-align:left}
+.pztable td.rg{font-weight:700}
+.pztable td.in{background:var(--in-bg);padding:0}
+.pztable td.in input{width:100%;border:0;background:transparent;text-align:right;font:inherit;padding:7px 12px;min-width:90px;color:var(--ink)}
+.pztable td.in input:focus{outline:2px solid var(--in-focus);outline-offset:-2px;background:#fff}
+.pztable td.in input::placeholder{color:#B5BCC7}
+.pztable td.calc{background:#F7F8FA}
+.pztable tr.sub td{background:var(--nat-bg);font-weight:700;border-top:2px solid var(--rc)}
+.pztable tr.tot td{background:var(--navy);color:#fff;font-weight:700}
+.pztable tr.tot .sem{box-shadow:0 0 0 2px #fff}
+.pztable .vb{display:inline-flex;align-items:center;gap:8px;justify-content:flex-end}
+.pztable .vb .bar{width:90px;height:7px;border-radius:4px;background:#E3E7EC;overflow:hidden;display:inline-block}
+.pztable .vb .bar span{display:block;height:100%;background:var(--rc)}
+.pztable .neg{color:var(--bad)}
+.pztable tr.tot .neg{color:#FFC9C4}
+.objt{min-width:0;width:auto;font-size:12.5px}
+.objt th,.objt td{min-width:105px}
+.objt td.plz,.objt th:first-child{min-width:170px}
+.objt td:last-child,.objt thead tr:first-child th:last-child{min-width:30px}
+.objt thead tr:nth-child(2) th{text-align:right}
+/* Filas compactas en Objetivos por Plaza */
+.objt thead th{padding:5px 10px;font-size:11.5px}
+.objt td{padding:2px 10px;line-height:1.25}
+.objt td.in input{padding:3px 10px;font-size:12.5px;line-height:1.25;width:115px;min-width:0}
+.objt td.plz input{width:170px}
+.objt td.cmt input{width:280px;text-align:left}
+.objt th.cmt-h{text-align:left;min-width:280px}
+/* Separadores marcados entre secciones: Plaza | Volumen | EBITDA | Pipeline | Comentario */
+.objt tbody td:nth-child(1),.objt tbody td:nth-child(4),.objt tbody td:nth-child(7),.objt tbody td:nth-child(9),
+.objt tfoot td:nth-child(1),.objt tfoot td:nth-child(4),.objt tfoot td:nth-child(7),.objt tfoot td:nth-child(9){border-right:2px solid #8F94D9}
+.objt thead tr:first-child th:nth-child(-n+4){border-right:2px solid rgba(255,255,255,.6)}
+.objt thead tr:nth-child(2) th:nth-child(3),.objt thead tr:nth-child(2) th:nth-child(6),.objt thead tr:nth-child(2) th:nth-child(8){border-right:2px solid rgba(255,255,255,.6)}
+.objt tr.sub td{padding:5px 10px}
+.objt .ib{width:22px;height:22px}
+.objt .ztag{padding:1px 6px;font-size:10.5px}
+.objt thead th:nth-child(1){text-align:left}
+.objt td:nth-child(-n+2){text-align:right}
+.objt td.plz{text-align:left}
+.objt td.plz input{text-align:left;font-weight:600;min-width:150px}
+.objt tr.sub td:first-child{text-align:left}
+.objt tbody tr:hover td{background:#FAFBFE}
+.objt tbody tr:hover td.in{background:var(--in-hover)}
+.ztag{font-size:11px;font-weight:700;border-radius:4px;padding:2px 7px}
+.ztag.new{background:#E7E9FC;color:var(--navy)}
+.ztag.na{background:#F1F3F6;color:var(--muted)}
+.obj-recon{margin-top:8px}
+.obj-recon b{color:var(--navy)}
 .pipe-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:16px}
 .pcard{border:1px solid var(--line);border-left:5px solid var(--rc);border-radius:10px;padding:12px 14px;background:#fff}
 .pcard.nat{background:var(--navy);color:#fff;border-color:var(--navy);border-left-color:var(--red)}
@@ -474,9 +535,11 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
   <button class="viewtab" role="tab" id="tabCaptura" data-view="viewCaptura" aria-controls="viewCaptura" aria-selected="true" type="button">Captura y análisis</button>
   <button class="viewtab" role="tab" id="tabMensual" data-view="viewMensual" aria-controls="viewMensual" aria-selected="false" type="button">Presupuesto 2027 mensual</button>
   <button class="viewtab" role="tab" id="tabPipeline" data-view="viewPipeline" aria-controls="viewPipeline" aria-selected="false" type="button">Pipeline Proyectos Ancla</button>
+  <button class="viewtab" role="tab" id="tabPlaza" data-view="viewPlaza" aria-controls="viewPlaza" aria-selected="false" type="button">Objetivos por Plaza</button>
 </nav>
 
 <main id="viewCaptura" role="tabpanel" aria-labelledby="tabCaptura">
+  <div class="ro-banner no-print" id="capturaLock" hidden role="note">🔒 <span>Solo lectura. La captura y el análisis los edita <b id="capturaEditor"></b>. Puedes consultar todo y trabajar en <b>Pipeline Proyectos Ancla</b> y <b>Objetivos por Plaza</b>.</span></div>
   <!-- ======================= TARJETAS RESUMEN ======================= -->
   <section class="kpis" aria-label="Resumen nacional 2027">
     <article class="kpi">
@@ -670,6 +733,28 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
   <div id="pipeRegions" style="display:grid;gap:22px"></div>
 </main>
 
+<!-- ======================= VISTA 4: OBJETIVOS POR PLAZA ======================= -->
+<main id="viewPlaza" role="tabpanel" aria-labelledby="tabPlaza" hidden>
+  <section class="panel national" aria-labelledby="objTitle">
+    <div class="panel-head">
+      <div>
+        <h2 id="objTitle">Objetivos por Plaza</h2>
+        <p class="desc">Resultado BE 2026 y objetivo 2027 por plaza, en volumen (m³) y EBITDA (MXN). Incluye el volumen del pipeline de proyectos ancla de cada plaza como referencia.</p>
+      </div>
+      <div class="hist-tools">
+        <button class="btn-light" id="btnObjExport" type="button">Exportar objetivos (CSV)</button>
+      </div>
+    </div>
+    <div class="pipe-cards" id="objCards"></div>
+    <div class="legend">
+      <span><i class="lg-in"></i>Captura manual</span>
+      <span><i class="lg-calc"></i>Cálculo automático</span>
+      <span><i class="lg-nat"></i>Total región</span>
+    </div>
+  </section>
+  <div id="objRegions" style="display:grid;gap:22px"></div>
+</main>
+
 <!-- ======================= DIÁLOGO DE LIMPIEZA ======================= -->
 <dialog id="dlgClear" aria-labelledby="dlgClearTitle">
   <div class="dlg-body">
@@ -734,7 +819,7 @@ const PIPE_STATUS = [
   { id: 'perdido',     label: 'Perdido' }
 ];
 const PIPE_NUM = ['volCx', 'volObra', 'venta', 'margen', 'ebitda', 'duracion'];
-const PIPE_TXT = ['proyecto', 'cliente', 'arranque', 'comentario'];
+const PIPE_TXT = ['plaza', 'proyecto', 'cliente', 'arranque', 'comentario'];
 const PIPE_FLAGS = ['star', 'seg', 'pdm', 'ppto'];
 
 /* Indicadores capturables */
@@ -834,7 +919,7 @@ function emptyBlock() { return { vol: null, ing: null, cos: null }; }
 /** Presupuesto: se captura Volumen y EBITDA; price = precio fijado (null → precio de referencia) */
 function emptyBudget() { return { vol: null, ebitda: null, price: null }; }
 function emptyState() {
-  const s = { budget: {}, hist: {}, savedAt: null, savedBy: null, seedVersion: null, pipeline: { cs: [], nb: [], pa: [] }, pipeSeeds: [] };
+  const s = { budget: {}, hist: {}, savedAt: null, savedBy: null, seedVersion: null, pipeline: { cs: [], nb: [], pa: [] }, pipeSeeds: [], plazaObj: { cs: [], nb: [], pa: [] } };
   REGIONS.forEach(r => { s.budget[r.id] = emptyBudget(); });
   CONFIG.HIST_YEARS.forEach(y => { s.hist[y] = {}; REGIONS.forEach(r => { s.hist[y][r.id] = emptyBlock(); }); });
   return s;
@@ -874,6 +959,16 @@ function normalizeState(raw) {
   s.seedVersion = raw.seedVersion || null;
   s.pipeline = normalizePipeline(raw.pipeline);
   s.pipeSeeds = Array.isArray(raw.pipeSeeds) ? raw.pipeSeeds.filter(x => typeof x === 'string') : [];
+  /* Objetivos por plaza: BE 2026 y Objetivo 2027 (m³ y MXN) */
+  if (raw.plazaObj && typeof raw.plazaObj === 'object') {
+    const num = x => (typeof x === 'number' && isFinite(x)) ? x : null;
+    REGIONS.forEach(r => (Array.isArray(raw.plazaObj[r.id]) ? raw.plazaObj[r.id] : []).forEach(o => {
+      if (!o) return;
+      s.plazaObj[r.id].push({ id: typeof o.id === 'string' ? o.id : uid(), plaza: typeof o.plaza === 'string' ? o.plaza : '',
+        beVol: num(o.beVol), beEb: num(o.beEb), objVol: num(o.objVol), objEb: num(o.objEb),
+        comentario: typeof o.comentario === 'string' ? o.comentario : '' });
+    }));
+  }
   return s;
 }
 function loadState() {
@@ -915,8 +1010,18 @@ let state = emptyState();
    ===================================================================== */
 let PIPE_SEEDS = [];   // referencia.json → pipeSeeds
 /** Aplica histórico precargado y obras precargadas que falten */
+let OBJ_SEEDS = [];    // referencia.json → objSeeds (objetivos por plaza)
 function applySeedsTo(st) {
   if (SEED_VERSION && st.seedVersion !== SEED_VERSION) applySeed(st, !!st.seedVersion);
+  OBJ_SEEDS.forEach(seed => {
+    if (st.pipeSeeds.includes(seed.id) || !st.plazaObj[seed.region]) return;
+    const list = st.plazaObj[seed.region];
+    seed.rows.forEach(src => {
+      if (list.some(o => normTxt(o.plaza) === normTxt(src.plaza))) return;
+      list.push(Object.assign({ id: uid(), comentario: '' }, src));
+    });
+    st.pipeSeeds.push(seed.id);
+  });
   PIPE_SEEDS.forEach(seed => {
     if (st.pipeSeeds.includes(seed.id) || !st.pipeline[seed.region]) return;
     const list = st.pipeline[seed.region];
@@ -937,7 +1042,7 @@ function loadUI() {
       histYear: CONFIG.HIST_YEARS.includes(+ui.histYear) ? +ui.histYear : def.histYear,
       metric: ['vol', 'ing', 'ebitda'].includes(ui.metric) ? ui.metric : def.metric,
       natRegion: (ui.natRegion === 'nat' || REGIONS.some(r => r.id === ui.natRegion)) ? ui.natRegion : def.natRegion,
-      view: ['viewCaptura', 'viewMensual', 'viewPipeline'].includes(ui.view) ? ui.view : def.view,
+      view: ['viewCaptura', 'viewMensual', 'viewPipeline', 'viewPlaza'].includes(ui.view) ? ui.view : def.view,
       profile: ['trend', 'real', 'flat'].includes(ui.profile) ? ui.profile : def.profile,
       mRegion: (ui.mRegion === 'nat' || REGIONS.some(r => r.id === ui.mRegion)) ? ui.mRegion : def.mRegion
     };
@@ -1674,7 +1779,8 @@ function exportMonthlyCSV() {
 function switchView(id) {
   ui.view = id; saveUI();
   document.querySelectorAll('.viewtab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.view === id)));
-  ['viewCaptura', 'viewMensual', 'viewPipeline'].forEach(v => { document.getElementById(v).hidden = v !== id; });
+  ['viewCaptura', 'viewMensual', 'viewPipeline', 'viewPlaza'].forEach(v => { document.getElementById(v).hidden = v !== id; });
+  if (id === 'viewPlaza') renderObjetivos();
   window.scrollTo(0, 0);
 }
 
@@ -1697,13 +1803,13 @@ function bindMonthly() {
    Margen % EBITDA ; Duración meses ; Arranque AAAA-MM.
    ===================================================================== */
 /* Orden de columnas al pegar desde Excel */
-const PIPE_PASTE_ORDER = ['proyecto', 'cliente', 'estatus', 'volCx', 'venta', 'margen', 'ebitda', 'duracion', 'arranque', 'comentario'];
+const PIPE_PASTE_ORDER = ['plaza', 'proyecto', 'cliente', 'estatus', 'volCx', 'venta', 'margen', 'ebitda', 'duracion', 'arranque', 'comentario'];
 let pipeFlt = { q: '', status: 'all', star: false, seg: false, ppto: false };
 
 function uid() { return 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
 function newPipeRow() {
   return { id: uid(), star: false, seg: false, pdm: false, ppto: true, estatus: 'proyecto',
-           proyecto: '', cliente: '', volCx: null, arranque: '', volObra: null, venta: null, margen: null, ebitda: null, duracion: null, comentario: '' };
+           plaza: '', proyecto: '', cliente: '', volCx: null, arranque: '', volObra: null, venta: null, margen: null, ebitda: null, duracion: null, comentario: '' };
 }
 function normalizePipeline(raw) {
   const out = { cs: [], nb: [], pa: [] };
@@ -1716,6 +1822,11 @@ function normalizePipeline(raw) {
       row.estatus = PIPE_STATUS.some(x => x.id === (src && src.estatus)) ? src.estatus : 'proyecto';
       PIPE_TXT.forEach(k => { row[k] = (src && typeof src[k] === 'string') ? src[k] : ''; });
       PIPE_NUM.forEach(k => { row[k] = (src && typeof src[k] === 'number' && isFinite(src[k])) ? src[k] : null; });
+      /* Migración: obras cargadas con la plaza al inicio del comentario ("CDMX · …") */
+      if (!row.plaza) {
+        const m = row.comentario.match(/^(Cancún|CDMX|Xalapa|Oaxaca) · (.*)$/);
+        if (m) { row.plaza = m[1]; row.comentario = m[2]; }
+      }
       out[r.id].push(row);
     });
   });
@@ -1731,7 +1842,7 @@ function pipeVisible(r) {
   if (pipeFlt.ppto && !r.ppto) return false;
   if (pipeFlt.q) {
     const q = normTxt(pipeFlt.q);
-    if (![r.proyecto, r.cliente, r.comentario].some(t => normTxt(t).includes(q))) return false;
+    if (![r.plaza, r.proyecto, r.cliente, r.comentario].some(t => normTxt(t).includes(q))) return false;
   }
   return true;
 }
@@ -1773,6 +1884,7 @@ function pipeRowHTML(reg, r) {
     <td><div class="stwrap">
       <select class="st" ${at} data-f="estatus" data-s="${r.estatus}" aria-label="Estatus">${PIPE_STATUS.map(x => `<option value="${x.id}"${x.id === r.estatus ? ' selected' : ''}>● ${x.label}</option>`).join('')}</select>
     </div></td>
+    <td><input class="pf" ${at} data-f="plaza" value="${escAttr(r.plaza)}" placeholder="Plaza" list="plazaList-${reg}" autocomplete="off" style="min-width:90px"></td>
     <td><input class="pf name" ${at} data-f="proyecto" value="${escAttr(r.proyecto)}" placeholder="Nombre del proyecto" autocomplete="off" style="min-width:200px"></td>
     <td><input class="pf cli" ${at} data-f="cliente" value="${escAttr(r.cliente)}" placeholder="Cliente" autocomplete="off" style="min-width:150px"></td>
     ${num('volCx', 'TBC', 70)}
@@ -1789,7 +1901,7 @@ function pipeRowHTML(reg, r) {
 function pipeFootHTML(reg) {
   const rows = state.pipeline[reg].filter(pipeVisible);
   const t = pipeTotals(rows);
-  return `<tr><td colspan="4">Total ${REGIONS.find(r => r.id === reg).name} · ${t.n} proyecto${t.n === 1 ? '' : 's'}</td>
+  return `<tr><td colspan="5">Total ${REGIONS.find(r => r.id === reg).name} · ${t.n} proyecto${t.n === 1 ? '' : 's'}</td>
     <td class="num">${n1(t.volCx)}</td><td class="num">${n1(t.venta)}</td>
     <td class="num">${t.margen === null ? '—' : n1(t.margen) + '%'}</td><td class="num">${t.ebitda === null ? '—' : n1(t.ebitda)}</td>
     <td class="num">${t.dur === null ? '—' : n1(t.dur) + ' prom.'}</td><td></td><td colspan="2"></td></tr>`;
@@ -1799,13 +1911,15 @@ function renderPipeRegion(reg) {
   const box = document.getElementById('pipeBox-' + reg);
   const rows = state.pipeline[reg].filter(pipeVisible);
   let h = `<table class="ptable"><thead><tr>
-    <th style="width:40px"></th><th style="width:130px">Estatus</th><th style="width:22%">Proyecto</th><th style="width:12%">Cliente</th>
+    <th style="width:40px"></th><th style="width:130px">Estatus</th><th style="width:8%">Plaza</th><th style="width:20%">Proyecto</th><th style="width:11%">Cliente</th>
     <th class="num" style="width:82px">Vol. CEMEX<small>K m³</small></th>
     <th class="num" style="width:82px">Venta<small>M MXN</small></th><th class="num" style="width:82px">Margen<small>% EBITDA</small></th><th class="num" style="width:82px">EBITDA<small>M MXN</small></th><th class="num" style="width:82px">Duración<small>meses</small></th>
     <th style="width:82px">Arranque<small>AAAA-MM</small></th><th>Comentario</th><th style="width:34px"></th></tr></thead><tbody>`;
   h += rows.length ? rows.map(r => pipeRowHTML(reg, r)).join('')
-    : `<tr><td colspan="12" class="pipe-empty">${state.pipeline[reg].length ? 'Ningún proyecto coincide con los filtros.' : 'Sin proyectos. Usa “+ Agregar obra” o pega renglones desde Excel.'}</td></tr>`;
+    : `<tr><td colspan="13" class="pipe-empty">${state.pipeline[reg].length ? 'Ningún proyecto coincide con los filtros.' : 'Sin proyectos. Usa “+ Agregar obra” o pega renglones desde Excel.'}</td></tr>`;
   h += `</tbody><tfoot id="pipeFoot-${reg}">${pipeFootHTML(reg)}</tfoot></table>`;
+  const plazas = [...new Set(state.pipeline[reg].map(r => r.plaza.trim()).filter(Boolean))].sort();
+  h += `<datalist id="plazaList-${reg}">${plazas.map(p => `<option value="${escAttr(p)}">`).join('')}</datalist>`;
   box.innerHTML = h;
 }
 
@@ -1851,6 +1965,7 @@ function renderPipeSummary() {
 
   const vis = all.filter(pipeVisible);
   const tv = pipeTotals(vis);
+  if (!document.getElementById('viewPlaza').hidden) renderObjetivos();
   document.getElementById('pipeSum').innerHTML = `<b>${tv.n}</b> proyectos · <b>${n1(tv.volCx)} K m³</b> de concreto · <b>${tv.vp}</b> para presentación VP`;
 }
 
@@ -1920,10 +2035,10 @@ function pastePipeRows(reg, startId, text) {
 
 function exportPipelineCSV() {
   const esc = v => { const s = (v === null || v === undefined) ? '' : String(v); return /[",\n;]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
-  const lines = [['Región', 'Estatus', 'Presentación VP', 'Proyecto', 'Cliente', 'Vol. CEMEX (K m3)', 'Venta (M MXN)', 'Margen (% EBITDA)', 'EBITDA (M MXN)', 'Duración (meses)', 'Arranque', 'Comentario'].map(esc).join(',')];
+  const lines = [['Región', 'Estatus', 'Presentación VP', 'Plaza', 'Proyecto', 'Cliente', 'Vol. CEMEX (K m3)', 'Venta (M MXN)', 'Margen (% EBITDA)', 'EBITDA (M MXN)', 'Duración (meses)', 'Arranque', 'Comentario'].map(esc).join(',')];
   REGIONS.forEach(r => state.pipeline[r.id].forEach(x => {
     lines.push([r.name, PIPE_STATUS.find(s => s.id === x.estatus).label, x.star ? 'Sí' : '',
-      x.proyecto, x.cliente, x.volCx, x.venta, x.margen, x.ebitda, x.duracion, x.arranque || 'TBD', x.comentario].map(esc).join(','));
+      x.plaza, x.proyecto, x.cliente, x.volCx, x.venta, x.margen, x.ebitda, x.duracion, x.arranque || 'TBD', x.comentario].map(esc).join(','));
   }));
   const blob = new Blob(['\uFEFF' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
   const a = document.createElement('a');
@@ -1932,6 +2047,281 @@ function exportPipelineCSV() {
   document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
   toast('Pipeline exportado a CSV.');
+}
+
+/* =====================================================================
+   7f. OBJETIVOS POR PLAZA (cuarta pestaña)
+   BE 2026 vs Objetivo 2027 por plaza (m³ y MXN), con el volumen del
+   pipeline de proyectos ancla de la misma plaza como referencia.
+   ===================================================================== */
+const OBJ_FIELDS = ['beVol', 'objVol', 'beEb', 'objEb'];
+
+/** Volumen del pipeline activo (m³) por plaza de una región */
+function pipeVolByPlaza(reg) {
+  const m = new Map();
+  state.pipeline[reg].filter(x => x.estatus !== 'perdido').forEach(x => {
+    const k = normTxt(x.plaza).trim();
+    if (!k) return;
+    m.set(k, (m.get(k) || 0) + (x.volCx || 0) * 1000);   /* K m³ → m³ */
+  });
+  return m;
+}
+function plazaPipeVol(pipeMap, name) {
+  const k = normTxt(name).trim();
+  if (!k) return 0;
+  const parts = k.split(/\s*[-\/]\s*/).filter(Boolean);
+  let v = 0;
+  pipeMap.forEach((vol, pk) => { if (pk === k || parts.includes(pk)) v += vol; });
+  return v;
+}
+function objVar(prev, cur) {
+  if (cur === null && prev === null) return { cls: 'none', txt: '—' };
+  if (cur === null) return { cls: 'na', txt: 'Sin objetivo' };
+  if (prev === null) return { cls: 'new', txt: 'Sin BE 2026' };
+  if (prev === 0) return { cls: 'new', txt: 'Base $0' };
+  const v = (cur - prev) / Math.abs(prev);
+  return { v, cls: v >= 0 ? 'ok' : v >= CONFIG.VAR_YELLOW ? 'warn' : 'bad', txt: (v >= 0 ? '+' : '') + fmt(v, 'pct') };
+}
+function varTd(prev, cur, money, key) {
+  const o = objVar(prev, cur);
+  const dc = key ? ` data-c="${key}"` : '';
+  const abs = (prev !== null && cur !== null) ? cur - prev : null;
+  const tip = abs === null ? '' : ` title="Variación: ${money ? fmt(abs, 'mxn0') : fmt(abs, 'vol0') + ' m³'}"`;
+  if (o.cls === 'none') return `<td class="calc"${dc}>—</td>`;
+  if (o.v === undefined) return `<td class="calc"${dc}><span class="ztag ${o.cls}">${o.txt}</span></td>`;
+  return `<td class="calc${o.v < 0 ? ' neg' : ''}"${dc}${tip}><span class="sem ${o.cls}"></span>${o.txt}</td>`;
+}
+function objTotals(rows) {
+  const sum = k => { const xs = rows.map(r => r[k]).filter(v => v !== null); return xs.length ? xs.reduce((a, b) => a + b, 0) : null; };
+  return { beVol: sum('beVol'), objVol: sum('objVol'), beEb: sum('beEb'), objEb: sum('objEb'), n: rows.length };
+}
+/** Celdas calculadas de un renglón, por clave: vVol, vEb, pv, cov */
+function objCalcCells(reg, o, pipeMap) {
+  const pv = plazaPipeVol(pipeMap, o.plaza);
+  const cov = (o.objVol && pv) ? pv / o.objVol : null;   /* sin obras en la plaza → "—" */
+  return {
+    vVol: varTd(o.beVol, o.objVol, false, 'vVol'),
+    vEb: varTd(o.beEb, o.objEb, true, 'vEb'),
+    pv: `<td class="calc" data-c="pv">${pv ? fmt(pv, 'vol0') : '—'}</td>`,
+    cov: `<td class="calc" data-c="cov">${cov === null ? '—' : `<span class="sem ${cov >= 1 ? 'ok' : cov >= 0.5 ? 'warn' : 'bad'}"></span>${fmt(cov, 'pct')}`}</td>`
+  };
+}
+function objDisp(f, v) { return v === null ? '' : (f === 'beEb' || f === 'objEb') ? NF.mxn0.format(v) : NF.vol0.format(v); }
+
+function objRowHTML(reg, o, pipeMap) {
+  const at = `data-reg="${reg}" data-id="${o.id}"`;
+  const inp = f => `<td class="in"><input class="oz" ${at} data-f="${f}" value="${escAttr(objDisp(f, o[f]))}" placeholder="—" inputmode="decimal" autocomplete="off"></td>`;
+  const c = objCalcCells(reg, o, pipeMap);
+  return `<tr data-id="${o.id}">
+    <td class="in plz"><input class="oz txt" ${at} data-f="plaza" value="${escAttr(o.plaza)}" placeholder="Plaza" autocomplete="off"></td>
+    ${inp('beVol')}${inp('objVol')}${c.vVol}
+    ${inp('beEb')}${inp('objEb')}${c.vEb}
+    ${c.pv}${c.cov}
+    <td class="in cmt"><input class="oz txt" ${at} data-f="comentario" value="${escAttr(o.comentario || '')}" title="${escAttr(o.comentario || '')}" placeholder="Comentario" autocomplete="off"></td>
+    <td class="dcell"><button type="button" class="ib del" ${at} data-odel="1" title="Eliminar plaza" aria-label="Eliminar plaza">×</button></td>
+  </tr>`;
+}
+
+function objFootHTML(reg) {
+  const rows = state.plazaObj[reg];
+  const t = objTotals(rows);
+  const pipeMap = pipeVolByPlaza(reg);
+  const pv = rows.reduce((a, o) => a + plazaPipeVol(pipeMap, o.plaza), 0);
+  const cov = (t.objVol && pv) ? pv / t.objVol : null;
+  return `<tr class="sub"><td>Total ${REGIONS.find(r => r.id === reg).name} · ${t.n} plazas</td>
+    <td>${t.beVol === null ? '—' : fmt(t.beVol, 'vol0')}</td><td>${t.objVol === null ? '—' : fmt(t.objVol, 'vol0')}</td>${varTd(t.beVol, t.objVol, false)}
+    <td>${t.beEb === null ? '—' : fmt(t.beEb, 'mxn0')}</td><td>${t.objEb === null ? '—' : fmt(t.objEb, 'mxn0')}</td>${varTd(t.beEb, t.objEb, true)}
+    <td>${pv ? fmt(pv, 'vol0') : '—'}</td><td>${cov === null ? '—' : fmt(cov, 'pct')}</td><td></td><td></td></tr>`;
+}
+
+/** Cuadre: suma de objetivos de plaza vs meta regional de la pestaña Captura y análisis */
+function objReconHTML(reg) {
+  const t = objTotals(state.plazaObj[reg]);
+  const c = calc(getBlock('budget', reg));
+  if (c.vol === null && c.ebitda === null) return 'Sin meta capturada en Captura y análisis para cuadrar.';
+  const part = (a, b, f) => (a === null || !b) ? '—' : `${f(a)} de ${f(b)} (<b>${fmt(a / b, 'pct')}</b>)`;
+  return `Cuadre vs meta regional (Captura y análisis): volumen ${part(t.objVol, c.vol, v => fmt(v, 'vol0') + ' m³')} · EBITDA ${part(t.objEb, c.ebitda, v => fmt(v, 'mxn0'))}`;
+}
+
+function renderObjRegion(reg) {
+  const box = document.getElementById('objBox-' + reg);
+  if (!box) return;
+  const pipeMap = pipeVolByPlaza(reg);
+  const rows = state.plazaObj[reg];
+  let h = `<table class="pztable objt"><thead>
+    <tr><th rowspan="2">Plaza</th><th class="grp" colspan="3">Volumen <small>m³</small></th><th class="grp" colspan="3">EBITDA <small>MXN</small></th>
+      <th class="grp" colspan="2">Pipeline proyectos ancla</th><th rowspan="2" class="cmt-h">Comentario</th><th rowspan="2"></th></tr>
+    <tr><th>BE 2026</th><th>Objetivo 2027</th><th>Var.</th><th>BE 2026</th><th>Objetivo 2027</th><th>Var.</th><th>Vol. m³</th><th>% del objetivo</th></tr>
+  </thead><tbody>`;
+  h += rows.length ? rows.map(o => objRowHTML(reg, o, pipeMap)).join('')
+    : `<tr><td colspan="11" style="text-align:left;color:var(--muted)">Sin plazas. Usa “+ Agregar plaza” o pega desde Excel (Plaza, Vol. BE 2026, Vol. Obj. 2027, EBITDA BE 2026, EBITDA Obj. 2027, Comentario).</td></tr>`;
+  h += `</tbody><tfoot id="objFoot-${reg}">${objFootHTML(reg)}</tfoot></table>`;
+  box.innerHTML = h;
+  document.getElementById('objRecon-' + reg).innerHTML = objReconHTML(reg);
+}
+
+function renderObjCards() {
+  const box = document.getElementById('objCards');
+  if (!box) return;
+  const card = (name, color, rows, budget, nat) => {
+    const t = objTotals(rows);
+    const vv = objVar(t.beVol, t.objVol), ve = objVar(t.beEb, t.objEb);
+    const pctMeta = (a, b) => (a === null || !b) ? '—' : fmt(a / b, 'pct');
+    return `<div class="pcard${nat ? ' nat' : ''}" style="--rc:${color}">
+      <div class="pc-top"><h4>${name}</h4><div class="pc-pct"><b>${vv.v === undefined ? '—' : vv.txt}</b><span>volumen vs BE 2026</span></div></div>
+      <div class="big">${t.objVol === null ? '—' : fmt(t.objVol, 'vol0')}<small>m³ objetivo 2027</small></div>
+      <div class="pc-meta2">BE 2026: ${t.beVol === null ? '—' : fmt(t.beVol, 'vol0') + ' m³'}</div>
+      <div class="meta"><span>EBITDA objetivo ${t.objEb === null ? '—' : fmt(t.objEb, 'mxn0')} · ${ve.v === undefined ? '—' : ve.txt} vs BE 2026</span>
+        <span>Suma de plazas vs meta Captura: ${pctMeta(t.objVol, budget.vol)} vol. · ${pctMeta(t.objEb, budget.ebitda)} EBITDA</span></div>
+    </div>`;
+  };
+  let html = '', all = [];
+  REGIONS.forEach(r => { all.push(...state.plazaObj[r.id]); html += card(r.name, r.hex, state.plazaObj[r.id], calc(getBlock('budget', r.id)), false); });
+  html += card('Nacional', 'var(--navy)', all, calc(getBlock('budget', 'nat')), true);
+  box.innerHTML = html;
+}
+
+function renderObjetivos() {
+  const box = document.getElementById('objRegions');
+  if (!box) return;
+  if (!box.children.length) {
+    box.innerHTML = REGIONS.map(r => `
+      <section class="panel pipe-region" style="--rc:${r.hex}" aria-labelledby="objH-${r.id}">
+        <div class="panel-head">
+          <h2 id="objH-${r.id}"><span class="regdot" style="background:${r.hex}"></span>Objetivos ${r.name}</h2>
+          <div class="hist-tools">
+            <button class="btn-light" type="button" data-osort="${r.id}">Ordenar por objetivo</button>
+            <button class="btn-add" type="button" data-oadd="${r.id}">+ Agregar plaza</button>
+          </div>
+        </div>
+        <div class="scroll-x" id="objBox-${r.id}"></div>
+        <p class="desc obj-recon" id="objRecon-${r.id}"></p>
+      </section>`).join('');
+  }
+  REGIONS.forEach(r => renderObjRegion(r.id));
+  renderObjCards();
+}
+
+/** Actualiza cálculos de un renglón, totales y tarjetas sin redibujar (conserva el foco) */
+function updateObjRow(reg, id) {
+  const o = state.plazaObj[reg].find(x => x.id === id);
+  const tr = document.querySelector(`#objBox-${reg} tr[data-id="${id}"]`);
+  if (o && tr) {
+    const c = objCalcCells(reg, o, pipeVolByPlaza(reg));
+    Object.keys(c).forEach(k => { const td = tr.querySelector(`td[data-c="${k}"]`); if (td) td.outerHTML = c[k]; });
+  }
+  document.getElementById('objFoot-' + reg).innerHTML = objFootHTML(reg);
+  document.getElementById('objRecon-' + reg).innerHTML = objReconHTML(reg);
+  renderObjCards();
+}
+
+function exportObjCSV() {
+  const esc = v => { const s = (v === null || v === undefined) ? '' : String(v); return /[",\n;]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+  const pct = (a, b) => (a === null || b === null || !a) ? '' : ((b - a) / Math.abs(a) * 100).toFixed(1);
+  const lines = [['Región', 'Plaza', 'Vol. BE 2026 (m3)', 'Vol. Objetivo 2027 (m3)', 'Var. vol. %', 'EBITDA BE 2026 (MXN)', 'EBITDA Objetivo 2027 (MXN)', 'Var. EBITDA %', 'Vol. pipeline ancla (m3)', 'Comentario'].map(esc).join(',')];
+  REGIONS.forEach(r => {
+    const pm = pipeVolByPlaza(r.id);
+    state.plazaObj[r.id].forEach(o => lines.push([r.name, o.plaza, o.beVol, o.objVol, pct(o.beVol, o.objVol), o.beEb, o.objEb, pct(o.beEb, o.objEb), plazaPipeVol(pm, o.plaza) || '', o.comentario || ''].map(esc).join(',')));
+  });
+  const blob = new Blob(['\uFEFF' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `Objetivos_por_Plaza_${CONFIG.BUDGET_YEAR}.csv`;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  toast('Objetivos por plaza exportados a CSV.');
+}
+
+function bindObjetivos() {
+  const view = document.getElementById('viewPlaza');
+  const find = (reg, id) => state.plazaObj[reg].find(x => x.id === id);
+  view.addEventListener('focusin', e => {
+    const t = e.target;
+    if (!t.classList.contains('oz') || t.classList.contains('txt')) return;
+    const o = find(t.dataset.reg, t.dataset.id);
+    t.value = o && o[t.dataset.f] !== null ? String(o[t.dataset.f]) : '';
+  });
+  view.addEventListener('focusout', e => {
+    const t = e.target;
+    if (!t.classList.contains('oz') || t.classList.contains('txt')) return;
+    const o = find(t.dataset.reg, t.dataset.id);
+    if (o) t.value = objDisp(t.dataset.f, o[t.dataset.f]);
+  });
+  view.addEventListener('input', e => {
+    const t = e.target;
+    if (!t.classList.contains('oz')) return;
+    const o = find(t.dataset.reg, t.dataset.id);
+    if (!o) return;
+    if (t.dataset.f === 'plaza') o.plaza = t.value;
+    else if (t.dataset.f === 'comentario') { o.comentario = t.value; t.title = t.value; markDirty(); return; }
+    else {
+      const clean = sanitizeTyping(t.value);
+      if (clean !== t.value) t.value = clean;
+      const v = parseNum(t.value);
+      o[t.dataset.f] = (v === null || Number.isNaN(v)) ? null : v;
+    }
+    markDirty();
+    updateObjRow(t.dataset.reg, t.dataset.id);
+  });
+  view.addEventListener('keydown', e => {
+    const t = e.target;
+    if (e.key !== 'Enter' || !t.classList.contains('oz')) return;
+    e.preventDefault();
+    const tr = t.closest('tr').nextElementSibling;
+    const next = tr && tr.querySelector(`.oz[data-f="${t.dataset.f}"]`);
+    if (next) next.focus(); else t.blur();
+  });
+  /* Pegar bloque desde Excel: Plaza, Vol. BE 2026, Vol. Obj. 2027, EBITDA BE 2026, EBITDA Obj. 2027 */
+  view.addEventListener('paste', e => {
+    const t = e.target;
+    if (!t.classList.contains('oz') || t.dataset.f !== 'plaza') return;
+    const text = (e.clipboardData || window.clipboardData).getData('text') || '';
+    if (!/[\t\n]/.test(text.trim())) return;
+    e.preventDefault();
+    const reg = t.dataset.reg, list = state.plazaObj[reg];
+    let idx = list.findIndex(x => x.id === t.dataset.id), first = true, n = 0;
+    text.replace(/\r/g, '').split('\n').filter(l => l.trim()).forEach(line => {
+      const c = line.split('\t');
+      if (/grand total|^total/i.test(c[0] || '')) return;
+      let o;
+      if (first && idx >= 0 && !list[idx].plaza) o = list[idx];
+      else { o = { id: uid(), plaza: '', beVol: null, beEb: null, objVol: null, objEb: null, comentario: '' }; list.splice(++idx, 0, o); }
+      first = false; n++;
+      o.plaza = (c[0] || '').trim();
+      ['beVol', 'objVol', 'beEb', 'objEb'].forEach((f, j) => { const v = parseNum(c[j + 1]); o[f] = (v === null || Number.isNaN(v)) ? null : v; });
+      if (c[5] !== undefined) o.comentario = c[5].trim();
+    });
+    markDirty(); renderObjRegion(reg); renderObjCards();
+    toast(`Se cargaron ${n} plazas.`);
+  });
+  view.addEventListener('click', e => {
+    const add = e.target.closest('[data-oadd]');
+    if (add) {
+      const reg = add.dataset.oadd, o = { id: uid(), plaza: '', beVol: null, beEb: null, objVol: null, objEb: null, comentario: '' };
+      state.plazaObj[reg].push(o);
+      markDirty(); renderObjRegion(reg); renderObjCards();
+      const inp = document.querySelector(`#objBox-${reg} input[data-id="${o.id}"][data-f="plaza"]`);
+      if (inp) inp.focus();
+      return;
+    }
+    const srt = e.target.closest('[data-osort]');
+    if (srt) {
+      state.plazaObj[srt.dataset.osort].sort((a, b) => (b.objVol || 0) - (a.objVol || 0));
+      markDirty(); renderObjRegion(srt.dataset.osort);
+      return;
+    }
+    const del = e.target.closest('[data-odel]');
+    if (del) {
+      const list = state.plazaObj[del.dataset.reg];
+      const i = list.findIndex(x => x.id === del.dataset.id);
+      if (i < 0) return;
+      if (list[i].plaza && !confirm(`¿Eliminar la plaza "${list[i].plaza}"?`)) return;
+      list.splice(i, 1);
+      markDirty(); renderObjRegion(del.dataset.reg); renderObjCards();
+    }
+  });
+  document.getElementById('btnObjExport').addEventListener('click', exportObjCSV);
+  renderObjetivos();
 }
 
 function bindPipeline() {
@@ -2015,7 +2405,7 @@ function bindPipeline() {
   /* Pegar varias obras desde Excel sobre la celda Proyecto */
   view.addEventListener('paste', e => {
     const t = e.target;
-    if (!t.classList || !t.classList.contains('pf') || t.dataset.f !== 'proyecto') return;
+    if (!t.classList || !t.classList.contains('pf') || !['plaza', 'proyecto'].includes(t.dataset.f)) return;
     const text = (e.clipboardData || window.clipboardData).getData('text') || '';
     if (!/[\t\n]/.test(text.trim())) return;
     e.preventDefault();
@@ -2037,6 +2427,7 @@ function bindPipeline() {
 function refreshAll() {
   ['budgetTable', 'nationalTable', 'histTable'].forEach(id => refreshRows(document.getElementById(id)));
   renderKPIs(); renderMixTable(); renderChart(); renderComparison(); renderSeasonality(); renderMonthly();
+  applyCapturaLock();
   if (document.getElementById('pipeCards') && document.getElementById('pipeCards').children.length) renderPipeSummary();
 }
 let rafPending = false;
@@ -2211,7 +2602,7 @@ function openClearDialog() {
 function clearData(scope) {
   const fresh = emptyState();
   state.budget = fresh.budget;
-  if (scope === 'all') { state.hist = fresh.hist; state.pipeline = fresh.pipeline; renderPipeline(); }
+  if (scope === 'all') { state.hist = fresh.hist; state.pipeline = fresh.pipeline; state.plazaObj = fresh.plazaObj; renderPipeline(); renderObjetivos(); }
   ['budgetTable', 'histTable'].forEach(id => fillInputs(document.getElementById(id)));
   refreshAll(); saveState(true);
   toast(scope === 'all' ? 'Se borró toda la información.' : 'Se borró la captura 2027. El histórico se conserva.', 'warn');
@@ -2233,6 +2624,7 @@ function init() {
   buildBudgetTable();
   buildHistControls();
   bindVarSteppers();
+  bindObjetivos();
   bindPipeline();
   bindMonthly();
   renderMixLegend();
@@ -2295,6 +2687,14 @@ const USERS = [
   'María José Sulvarán Álvarez'
 ];
 
+/* Quién puede editar la pestaña "Captura y análisis" (presupuesto 2027 por región,
+   histórico y comparativo). Los demás la ven en solo lectura. Para agregar a
+   alguien, escribe su nombre exactamente como aparece en USERS. */
+const EDITORES_CAPTURA = [
+  'José Miguel López Gosain'
+];
+function canEditCaptura() { return EDITORES_CAPTURA.includes(sync.user); }
+
 const SESSION_KEY = 'presupuesto2027_sesion_v1';
 const DRAFT_KEY = 'presupuesto2027_borrador_v1';
 
@@ -2308,6 +2708,42 @@ const sync = {
   timer: null, maxTimer: null, retry: null, poll: null,
   needsRender: false, lastFrom: null, booted: false
 };
+
+/* ---------- candado de Captura y análisis ---------- */
+function applyCapturaLock() {
+  const view = document.getElementById('viewCaptura');
+  if (!view) return;
+  const ro = !canEditCaptura();
+  view.classList.toggle('ro-mode', ro);
+  const banner = document.getElementById('capturaLock');
+  if (banner) { banner.hidden = !ro; document.getElementById('capturaEditor').textContent = EDITORES_CAPTURA.join(', '); }
+  ['btnHistRestore', 'btnClear'].forEach(id => { const b = document.getElementById(id); if (b) b.hidden = ro; });
+  if (!ro) return;
+  view.querySelectorAll('input.cell').forEach(i => { i.readOnly = true; });
+  view.querySelectorAll('.st-btn, .st-in').forEach(el => { el.disabled = true; });
+}
+function lockMsg() { toast(`Solo ${EDITORES_CAPTURA.join(', ')} puede modificar Captura y análisis.`, 'warn'); }
+/* Bloqueos de respaldo: aunque un control quedara activo, no se modifica el dato */
+(function guardCaptura() {
+  const _commit = commitCell, _adjust = adjustBudget, _clear = clearData;
+  commitCell = function (inp) { if (canEditCaptura()) return _commit(inp); };
+  adjustBudget = function (key, target, reg) { if (canEditCaptura()) return _adjust(key, target, reg); lockMsg(); renderComparison(); };
+  clearData = function (scope) { if (canEditCaptura()) return _clear(scope); lockMsg(); };
+  document.addEventListener('paste', e => {
+    if (!canEditCaptura() && isCell(e.target)) { e.preventDefault(); e.stopImmediatePropagation(); lockMsg(); }
+  }, true);
+  document.addEventListener('click', e => {
+    if (canEditCaptura()) return;
+    if (e.target.closest('#btnHistRestore, #btnClear, #histCompare .st-btn')) { e.preventDefault(); e.stopImmediatePropagation(); lockMsg(); }
+  }, true);
+})();
+/** Al guardar, quien no tiene permiso conserva la captura y el histórico tal como están en línea */
+function protectCaptura(merged, remoteData) {
+  if (canEditCaptura() || !remoteData) return merged;
+  merged.budget = clone(remoteData.budget);
+  if (merged.seedVersion === remoteData.seedVersion) merged.hist = clone(remoteData.hist);  // las actualizaciones de referencia sí pasan
+  return merged;
+}
 
 /* ---------- utilidades ---------- */
 const clone = o => (o === undefined ? undefined : JSON.parse(JSON.stringify(o)));
@@ -2459,7 +2895,7 @@ async function syncNow() {
     for (let attempt = 0; attempt < 6 && !done; attempt++) {
       const snap = clone(state);
       const remote = await fetchRemote();
-      const merged = merge3(sync.base, snap, remote.data);
+      const merged = protectCaptura(merge3(sync.base, snap, remote.data), remote.data);
       const others = remote.data && !sameContent(merged, snap) ? remote.data.savedBy : null;
       if (remote.exists && sameContent(merged, remote.data)) {
         adopt(remote.data, remote.sha);
@@ -2544,6 +2980,7 @@ function renderFromState() {
   fillInputs(document.getElementById('budgetTable'));
   renderHistTable();          // incluye refreshAll()
   renderPipeline();
+  if (typeof renderObjetivos === 'function') renderObjetivos();
   updateStatus();
   if (sync.lastFrom) { toast(`Se incorporaron cambios de ${sync.lastFrom}.`); sync.lastFrom = null; }
 }
@@ -2560,6 +2997,7 @@ function applyReference(ref) {
   SEASON = ref.season || {};
   SEASON_EST = ref.seasonEst || {};
   PIPE_SEEDS = Array.isArray(ref.pipeSeeds) ? ref.pipeSeeds : [];
+  OBJ_SEEDS = Array.isArray(ref.objSeeds) ? ref.objSeeds : [];
   if (ref.histMonths) Object.keys(ref.histMonths).forEach(y => { CONFIG.HIST_MONTHS[y] = +ref.histMonths[y]; });
 }
 
