@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Presupuesto 2027 · Vista anual por región y Consolidado Nacional</title>
+<title>Presupuesto 2027 · Soluciones Integrales</title>
 <!--
   =====================================================================
   PRESUPUESTO 2027 — VISTA ANUAL
@@ -468,6 +468,28 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
   .two-col{grid-template-columns:1fr 1fr}
   .charts3{grid-template-columns:repeat(3,1fr);gap:8px}
 }
+/* ======================= AJUSTES: COMPACTO, PESTAÑAS FIJAS ======================= */
+.viewtabs{position:sticky;top:var(--tbh,78px);z-index:45;box-shadow:0 2px 6px rgba(20,20,184,.06)}
+.viewtab{padding:10px 18px 8px}
+.btn[aria-pressed="true"]{background:rgba(255,255,255,.24);border-color:#fff;box-shadow:inset 0 -3px 0 var(--red)}
+.grid th,.grid td{height:32px}
+.grid input.cell{height:31px}
+.grid thead th{padding:6px 12px}
+.simple th,.simple td{padding:4px 12px}
+.stepper button{width:24px;height:24px}
+.stepper input,.stepper .st-u{height:24px;line-height:24px}
+.mtable th,.mtable td{padding:3px 8px}
+.mtable tbody.blk tr:first-child td{padding-top:6px}
+.mtable tbody.blk tr:last-child td{padding-bottom:6px}
+.pf{padding:3px 6px}
+.ptable thead th{padding:7px 8px}
+.ptable td{padding:1px 4px}
+.pztable thead th{padding:7px 12px}
+.pztable td{padding:4px 12px}
+.pztable td.in input{padding:4px 12px}
+.chart-box .seg-lbl.mg{font-size:9px;font-weight:500;opacity:.9}
+.chart-box .mg-lbl{font-size:10px;fill:var(--navy)}
+.ro-mode .hint{display:none}
 </style>
 </head>
 <body class="locked">
@@ -479,7 +501,7 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
       <div class="mark" aria-hidden="true"><span></span><span></span><span></span></div>
       <div>
         <h2 id="loginTitle">Presupuesto 2027</h2>
-        <p class="lead">Vista anual por región y consolidado nacional</p>
+        <p class="lead">Soluciones Integrales</p>
       </div>
     </div>
     <label>Nombre
@@ -504,12 +526,16 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
     <div class="mark" aria-hidden="true"><span></span><span></span><span></span></div>
     <div>
       <h1>Presupuesto 2027</h1>
-      <p>Vista anual por región y consolidado nacional <span class="print-only" id="printDate"></span></p>
+      <p>Soluciones Integrales <span class="print-only" id="printDate"></span></p>
     </div>
   </div>
   <div class="actions">
     <span class="who" id="whoName"></span>
     <div class="status" id="status" aria-live="polite"><span class="dot"></span><span id="statusText">Conectando…</span></div>
+    <button class="btn" id="btnMensual" type="button" aria-pressed="false" aria-controls="viewMensual" title="Ver el Presupuesto 2027 distribuido por mes">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 0h2v2h4V0h2v2h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h2V0zM3 6v8h10V6H3zm1 2h2v2H4V8zm3 0h2v2H7V8zm3 0h2v2h-2V8zM4 11h2v2H4v-2zm3 0h2v2H7v-2z"/></svg>
+      Presupuesto mensual
+    </button>
     <button class="btn primary" id="btnSave" type="button" title="Se guarda solo; este botón fuerza el guardado en línea (Ctrl+S)">
       <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M2 1h9l3 3v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1zm2 1v4h7V2H4zm4 7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
       Guardar
@@ -533,7 +559,6 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
 <!-- ======================= PESTAÑAS PRINCIPALES ======================= -->
 <nav class="viewtabs" role="tablist" aria-label="Vistas">
   <button class="viewtab" role="tab" id="tabCaptura" data-view="viewCaptura" aria-controls="viewCaptura" aria-selected="true" type="button">Captura y análisis</button>
-  <button class="viewtab" role="tab" id="tabMensual" data-view="viewMensual" aria-controls="viewMensual" aria-selected="false" type="button">Presupuesto 2027 mensual</button>
   <button class="viewtab" role="tab" id="tabPipeline" data-view="viewPipeline" aria-controls="viewPipeline" aria-selected="false" type="button">Pipeline Proyectos Ancla</button>
   <button class="viewtab" role="tab" id="tabPlaza" data-view="viewPlaza" aria-controls="viewPlaza" aria-selected="false" type="button">Objetivos por Plaza</button>
 </nav>
@@ -578,7 +603,6 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
     <div class="panel-head">
       <div>
         <h2 id="capturaTitle">Captura regional 2027 · total anual</h2>
-        <p class="desc">Cada región captura solo <b>Volumen</b> y <b>EBITDA</b>. El resto se calcula: Ingreso = Volumen × Precio de referencia (2026 anualizado de cada región, ajustable desde el comparativo); Costo = Ingreso − EBITDA; margen y costo por m³ se derivan.</p>
       </div>
     </div>
     <div class="legend no-print">
@@ -595,7 +619,6 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
     <div class="panel-head">
       <div>
         <h2 id="natTitle">Consolidado Nacional 2027</h2>
-        <p class="desc">Suma automática de Centro Sur, Norte - Bajío y Pacífico; se actualiza al modificar cualquier región.</p>
       </div>
       <div class="hist-tools">
         <label class="field">Región
@@ -612,7 +635,7 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
         <div class="chart-box" id="chartVol"></div>
       </figure>
       <figure class="chart-card">
-        <figcaption>EBITDA <span>MXN</span></figcaption>
+        <figcaption>EBITDA <span>MXN · % margen</span></figcaption>
         <div class="chart-box" id="chartEbitda"></div>
       </figure>
       <figure class="chart-card">
@@ -631,7 +654,6 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
     <div class="panel-head">
       <div>
         <h2 id="histTitle">Histórico de Referencia</h2>
-        <p class="desc">Totales anuales reales por región (Colocación). 2026 incluye solo los meses cerrados; la fila anualizada permite compararlo contra 2027. EBITDA histórico = OCF (Ingreso − Costo).</p>
       </div>
       <div class="hist-tools">
         <label class="field">Región
@@ -644,18 +666,15 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
       </div>
     </div>
     <div id="histTable"></div>
-    <p class="desc hist-note" id="histNote"></p>
 
     <h3 class="sub-title" id="compareTitle">Comparativo anual</h3>
-    <p class="desc no-print" style="margin:-4px 0 10px">Una sección por región; el Nacional es la suma automática de las tres. Ajusta la Var. % con <b>−</b> / <b>+</b> (±1 pp; con Shift ±0.1 pp) o escribe el valor: el cambio reescribe el Presupuesto 2027 de esa región y actualiza todo. Volumen conserva precio y margen; Ingreso y Precio mueven el precio (el costo se mantiene); Costo, Costo unitario, EBITDA y Margen mueven el EBITDA.</p>
     <div id="histCompare"></div>
   </section>
   <!-- ======================= ESTACIONALIDAD DEL VOLUMEN ======================= -->
   <section class="panel" id="estacionalidad" aria-labelledby="seaTitle">
     <div class="panel-head">
       <div>
-        <h2 id="seaTitle">Estacionalidad del volumen nacional · promedio 2024–2026</h2>
-        <p class="desc">Volumen mensual (m³). El promedio de los tres años define el perfil estacional; el % indica el peso de cada mes en el año.</p>
+        <h2 id="seaTitle">Estacionalidad del volumen nacional (m³) · promedio 2024–2026</h2>
       </div>
     </div>
     <div class="scroll-x" id="seasonTable"></div>
@@ -669,13 +688,10 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
 </main>
 
 <!-- ======================= VISTA 2: PRESUPUESTO 2027 MENSUAL (RESULTADO) ======================= -->
-<main id="viewMensual" role="tabpanel" aria-labelledby="tabMensual" hidden>
-  <section class="panel national" aria-labelledby="mTitle">
+<main id="viewMensual" role="tabpanel" aria-label="Presupuesto 2027 mensual" hidden>
+  <section class="panel national">
     <div class="panel-head">
-      <div>
-        <h2 id="mTitle">Presupuesto 2027 mensual · resultado</h2>
-        <p class="desc">Resultado de la captura anual por región, distribuido por mes con el perfil seleccionado. El Nacional es la suma de las tres regiones. OCF = EBITDA del presupuesto (Ingreso − Costo).</p>
-      </div>
+      <div></div>
       <div class="hist-tools">
         <label class="field">Perfil de mensualización
           <select id="mProfile">
@@ -706,11 +722,9 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
 
 <!-- ======================= VISTA 3: PIPELINE PROYECTOS ANCLA ======================= -->
 <main id="viewPipeline" role="tabpanel" aria-labelledby="tabPipeline" hidden>
-  <section class="panel national" aria-labelledby="pipeTitle">
+  <section class="panel national">
     <div class="panel-head">
-      <div>
-        <h2 id="pipeTitle">Pipeline Proyectos Ancla</h2>
-      </div>
+      <div></div>
       <div class="hist-tools">
         <button class="btn-light" id="btnPipeExport" type="button">Exportar pipeline (CSV)</button>
       </div>
@@ -735,12 +749,9 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
 
 <!-- ======================= VISTA 4: OBJETIVOS POR PLAZA ======================= -->
 <main id="viewPlaza" role="tabpanel" aria-labelledby="tabPlaza" hidden>
-  <section class="panel national" aria-labelledby="objTitle">
+  <section class="panel national">
     <div class="panel-head">
-      <div>
-        <h2 id="objTitle">Objetivos por Plaza</h2>
-        <p class="desc">Resultado BE 2026 y objetivo 2027 por plaza, en volumen (m³) y EBITDA (MXN). Incluye el volumen del pipeline de proyectos ancla de cada plaza como referencia.</p>
-      </div>
+      <div></div>
       <div class="hist-tools">
         <button class="btn-light" id="btnObjExport" type="button">Exportar objetivos (CSV)</button>
       </div>
@@ -1373,7 +1384,7 @@ function renderChart() {
     .forEach(([key, id]) => drawChart(key, document.getElementById(id)));
   const regs = ui.natRegion === 'nat' ? REGIONS : REGIONS.filter(r => r.id === ui.natRegion);
   document.getElementById('chartLegend').innerHTML = regs.map(r => `<span><i style="background:${r.hex}"></i>${r.name}</span>`).join('') +
-    '<span>Barras claras = real (2026e anualizado); barra sólida = Presupuesto 2027</span>';
+    '<span>Claras: real (e = anualizado) · Sólida: Ppto 2027</span>';
 }
 
 /** Barras apiladas por región para un indicador */
@@ -1394,7 +1405,11 @@ function drawChart(key, el) {
   });
   if (maxPos === 0 && minNeg === 0) { el.innerHTML = '<p class="empty">Sin datos para graficar.</p>'; return; }
 
-  const W = 420, H = 300, P = { l: 56, r: 6, t: 22, b: 30 };
+  /* EBITDA: además del monto, margen % de cada región y del total */
+  const isEb = key === 'ebitda';
+  const mgOf = (p, reg) => calc(getBlock(p.scope, reg, p.year)).margin;
+  const pctTxt = m => (m === null || !isFinite(m)) ? '' : fmt(m, 'pct');
+  const W = 420, H = 300, P = { l: 56, r: 6, t: isEb ? 34 : 22, b: 30 };
   const step = niceStep((maxPos - minNeg) / 4);
   const dMax = Math.ceil(maxPos / step) * step, dMin = Math.floor(minNeg / step) * step;
   const ih = H - P.t - P.b;
@@ -1414,13 +1429,21 @@ function drawChart(key, el) {
       if (v === 0) return;
       let y1, y2;
       if (v > 0) { y1 = y(pos + v); y2 = y(pos); pos += v; } else { y1 = y(neg); y2 = y(neg + v); neg += v; }
-      s += `<rect x="${x.toFixed(1)}" y="${y1.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0.5, y2 - y1).toFixed(1)}" fill="${regs[ri].hex}" ${periods[i].scope === 'budget' ? '' : 'opacity=".78"'}><title>${regs[ri].name} · ${periods[i].label}: ${isVol ? fmt(v, 'vol0') + ' m³' : fmt(v, 'mxn0')}</title></rect>`;
+      s += `<rect x="${x.toFixed(1)}" y="${y1.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0.5, y2 - y1).toFixed(1)}" fill="${regs[ri].hex}" ${periods[i].scope === 'budget' ? '' : 'opacity=".78"'}><title>${regs[ri].name} · ${periods[i].label}: ${isVol ? fmt(v, 'vol0') + ' m³' : fmt(v, 'mxn0')}${isEb && pctTxt(mgOf(periods[i], regs[ri].id)) ? ' · margen ' + pctTxt(mgOf(periods[i], regs[ri].id)) : ''}</title></rect>`;
       /* Valor de la región dentro de su segmento (solo si cabe; si no, queda en el tooltip) */
-      if (y2 - y1 >= 14) {
+      const mTxt = isEb ? pctTxt(mgOf(periods[i], regs[ri].id)) : '';
+      if (mTxt && y2 - y1 >= 26) {
+        s += `<text class="seg-lbl" x="${(x + bw / 2).toFixed(1)}" y="${((y1 + y2) / 2 - 1).toFixed(1)}" text-anchor="middle">${axisFmt(v)}</text>`;
+        s += `<text class="seg-lbl mg" x="${(x + bw / 2).toFixed(1)}" y="${((y1 + y2) / 2 + 10).toFixed(1)}" text-anchor="middle">${mTxt}</text>`;
+      } else if (y2 - y1 >= 14) {
         s += `<text class="seg-lbl" x="${(x + bw / 2).toFixed(1)}" y="${((y1 + y2) / 2 + 4).toFixed(1)}" text-anchor="middle">${axisFmt(v)}</text>`;
       }
     });
     s += `<text class="lbl" x="${(x + bw / 2).toFixed(1)}" y="${(y(Math.max(pos, 0)) - 6).toFixed(1)}" text-anchor="middle">${axisFmt(totals[i])}</text>`;
+    if (isEb) {
+      const tm = pctTxt(mgOf(periods[i], ui.natRegion));
+      if (tm) s += `<text class="lbl mg-lbl" x="${(x + bw / 2).toFixed(1)}" y="${(y(Math.max(pos, 0)) - 19).toFixed(1)}" text-anchor="middle">${tm} margen</text>`;
+    }
     s += `<text class="axis" x="${(x + bw / 2).toFixed(1)}" y="${H - 9}" text-anchor="middle">${periods[i].label}</text>`;
   });
   el.innerHTML = s + '</svg>';
@@ -1430,7 +1453,6 @@ function drawChart(key, el) {
 function renderComparison() {
   const yr = ui.histYear;
   document.getElementById('compareTitle').textContent = `Comparativo por región: ${yearLabel(yr)} vs Presupuesto ${CONFIG.BUDGET_YEAR}`;
-  document.getElementById('histNote').textContent = HIST_NOTES[yr] || '';
   let html = '';
   REGIONS.forEach(r => {
     html += `<div class="cmp-block" style="--rc:${r.hex}"><h4 class="cmp-title"><span class="regdot" style="background:${r.hex}"></span>${r.name}</h4>` +
@@ -1630,7 +1652,7 @@ function renderSeasonality() {
 
   const estTxt = Object.keys(SEASON_EST).map(y => `${SEASON_EST[y].map(m => MONTHS_SHORT[m]).join('–').replace(/–.*–/, '–')} ${y}`).join(', ');
   document.getElementById('seasonNote').textContent = estTxt
-    ? `* ${estTxt}: valores estimados (replican 2024). El promedio de esos meses usa solo 2024–2025; el total y el % sí los incluyen, por lo que 2024 pesa doble en el % de Oct–Dic. Reemplazar con el cierre real o el forecast.`
+    ? `* ${estTxt}: estimados.`
     : '';
 
   /* ---------- Gráfica de línea con etiquetas y tendencia lineal ---------- */
@@ -1779,6 +1801,8 @@ function exportMonthlyCSV() {
 function switchView(id) {
   ui.view = id; saveUI();
   document.querySelectorAll('.viewtab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.view === id)));
+  const bm = document.getElementById('btnMensual');
+  if (bm) bm.setAttribute('aria-pressed', String(id === 'viewMensual'));
   ['viewCaptura', 'viewMensual', 'viewPipeline', 'viewPlaza'].forEach(v => { document.getElementById(v).hidden = v !== id; });
   if (id === 'viewPlaza') renderObjetivos();
   window.scrollTo(0, 0);
@@ -1786,6 +1810,7 @@ function switchView(id) {
 
 function bindMonthly() {
   document.querySelectorAll('.viewtab').forEach(t => t.addEventListener('click', () => switchView(t.dataset.view)));
+  document.getElementById('btnMensual').addEventListener('click', () => switchView('viewMensual'));
   const pSel = document.getElementById('mProfile');
   pSel.value = ui.profile;
   pSel.addEventListener('change', () => { ui.profile = pSel.value; saveUI(); renderMonthly(); });
@@ -3112,6 +3137,12 @@ function startApp() {
   } else sel.focus();
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  const tb = document.querySelector('.topbar');
+  const setH = () => document.documentElement.style.setProperty('--tbh', tb.offsetHeight + 'px');
+  setH();
+  if (window.ResizeObserver) new ResizeObserver(setH).observe(tb); else window.addEventListener('resize', setH);
+});
 document.addEventListener('DOMContentLoaded', startApp);
 </script>
 </body>
