@@ -490,6 +490,58 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
 .chart-box .seg-lbl.mg{font-size:9px;font-weight:500;opacity:.9}
 .chart-box .mg-lbl{font-size:10px;fill:var(--navy)}
 .ro-mode .hint{display:none}
+/* ======================= PEP POR PLAZA ======================= */
+#viewPep{max-width:none}
+.pep-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:14px}
+.pep-chips{display:flex;gap:6px;flex-wrap:wrap}
+.pep-chips .chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.pep-bar .pipe-search{flex:0 1 260px}
+.pep-unit{margin-left:auto;font-size:12px;color:var(--muted)}
+.pcard .pc-pct b.pep-down{color:var(--bad)}
+.pcard.nat .pc-pct b.pep-down{color:#FFC9C4}
+.pep-flag{color:#8A5A00;font-weight:600}
+.pcard.nat .pep-flag{color:#FFE2A8}
+#pepChart{padding:8px 12px}
+#pepChart .pep-pl{font-size:12.5px;font-weight:600;fill:var(--ink);font-family:var(--font)}
+#pepChart .pep-rg{font-weight:400;fill:var(--muted)}
+#pepChart .pep-vl{font-size:12px;font-weight:700;fill:var(--navy);font-family:var(--font);font-variant-numeric:tabular-nums}
+#pepChart .pep-vl.dn{fill:var(--red)}
+.pept{min-width:900px}
+.pept thead th,.pept td,.pept tfoot td{text-align:right}
+.pept thead th:first-child,.pept td.plz,.pept tfoot td:first-child{text-align:left}
+.pept td.plz{min-width:170px}
+.pept td.plz{font-weight:600}
+.pept td b{font-weight:700}
+.pept tbody tr:hover td{background:#FAFBFE}
+.pept tr.pep-negrow td.plz{color:var(--bad)}
+.pept td.pep-dbc{text-align:center;padding:2px 12px}
+.pep-db{display:inline-block;vertical-align:middle}
+.pept th.pep-dbh{text-align:center}
+.pep-tick{display:inline-block;width:2px;height:10px;background:#fff;vertical-align:-1px;margin:0 2px}
+.pep-sw{display:inline-block;width:14px;height:8px;border-radius:2px;vertical-align:0;margin-left:3px;outline:1px solid rgba(255,255,255,.6)}
+.pept tfoot td{padding:5px 12px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pept tr.pep-sum td{background:#F7F8FA;color:var(--muted)}
+.pept tr.pep-adj td{background:#FFF8E5;color:#8A5A00;font-weight:600}
+.pept tr.pep-adj td:last-child{text-align:left;font-weight:400}
+.pept tr.tot td{background:var(--navy);color:#fff;font-weight:700}
+.pept tr.tot .neg{color:#FFC9C4}
+@media (max-width:900px){.pep-unit{margin-left:0;width:100%}}
+/* ======================= HEADER COMPACTO ======================= */
+.topbar{padding:7px 22px;gap:8px 18px;flex-wrap:nowrap;border-bottom-width:3px}
+.brand{gap:10px;min-width:0}
+.mark{width:26px;gap:2px}
+.mark span{height:5px}
+.brand h1{font-size:18px;line-height:1.15;white-space:nowrap}
+.brand p{font-size:11px;line-height:1.2}
+.actions{gap:6px;flex-wrap:nowrap;min-width:0}
+.btn{padding:5px 10px;font-size:12.5px;border-radius:6px;gap:6px}
+.btn svg{width:14px;height:14px}
+.btn[data-icon]{padding:5px 8px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.who{width:28px;height:28px;padding:0;display:inline-grid;place-items:center;font-size:11px;font-weight:700;border-radius:50%;flex:none;cursor:default}
+.status{font-size:11.5px;margin-right:4px;white-space:nowrap}
+.viewtab{padding:8px 16px 6px;font-size:13.5px}
+@media (max-width:900px){.topbar{flex-wrap:wrap}.actions{flex-wrap:wrap}.status{width:auto}}
 </style>
 </head>
 <body class="locked">
@@ -534,25 +586,25 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
     <div class="status" id="status" aria-live="polite"><span class="dot"></span><span id="statusText">Conectando…</span></div>
     <button class="btn" id="btnMensual" type="button" aria-pressed="false" aria-controls="viewMensual" title="Ver el Presupuesto 2027 distribuido por mes">
       <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 0h2v2h4V0h2v2h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h2V0zM3 6v8h10V6H3zm1 2h2v2H4V8zm3 0h2v2H7V8zm3 0h2v2h-2V8zM4 11h2v2H4v-2zm3 0h2v2H7v-2z"/></svg>
-      Presupuesto mensual
+      Ppto. mensual
     </button>
     <button class="btn primary" id="btnSave" type="button" title="Se guarda solo; este botón fuerza el guardado en línea (Ctrl+S)">
       <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M2 1h9l3 3v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1zm2 1v4h7V2H4zm4 7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
       Guardar
     </button>
-    <button class="btn" id="btnExport" type="button" title="Descargar archivo CSV compatible con Excel">
+    <button class="btn" id="btnExport" type="button" data-icon="1" title="Exportar a Excel (CSV)">
       <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M7 1h2v7.6l2.3-2.3 1.4 1.4L8 12.4 3.3 7.7l1.4-1.4L7 8.6V1zM2 13h12v2H2z"/></svg>
-      Exportar a Excel (CSV)
+      <span class="sr">Exportar a Excel (CSV)</span>
     </button>
-    <button class="btn" id="btnPrint" type="button" title="Imprimir o guardar como PDF">
+    <button class="btn" id="btnPrint" type="button" data-icon="1" title="Imprimir / PDF">
       <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 1h8v4H4V1zM2 6h12a1 1 0 0 1 1 1v5h-3v3H4v-3H1V7a1 1 0 0 1 1-1zm3 5v3h6v-3H5z"/></svg>
-      Imprimir / PDF
+      <span class="sr">Imprimir / PDF</span>
     </button>
-    <button class="btn danger" id="btnClear" type="button" title="Borrar información capturada">
+    <button class="btn danger" id="btnClear" type="button" data-icon="1" title="Limpiar información">
       <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M6 1h4l1 1h3v2H2V2h3l1-1zM3 5h10l-1 10H4L3 5z"/></svg>
-      Limpiar información
+      <span class="sr">Limpiar información</span>
     </button>
-    <button class="btn" id="btnLogout" type="button" title="Cerrar sesión en este equipo">Salir</button>
+    <button class="btn" id="btnLogout" type="button" data-icon="1" title="Salir (cerrar sesión en este equipo)"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M2 1h7v2H4v10h5v2H2V1zm9.3 3.3L15 8l-3.7 3.7-1.4-1.4L11.2 9H6V7h5.2L9.9 5.7l1.4-1.4z"/></svg><span class="sr">Salir</span></button>
   </div>
 </header>
 
@@ -561,6 +613,7 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
   <button class="viewtab" role="tab" id="tabCaptura" data-view="viewCaptura" aria-controls="viewCaptura" aria-selected="true" type="button">Captura y análisis</button>
   <button class="viewtab" role="tab" id="tabPipeline" data-view="viewPipeline" aria-controls="viewPipeline" aria-selected="false" type="button">Pipeline Proyectos Ancla</button>
   <button class="viewtab" role="tab" id="tabPlaza" data-view="viewPlaza" aria-controls="viewPlaza" aria-selected="false" type="button">Objetivos por Plaza</button>
+  <button class="viewtab" role="tab" id="tabPep" data-view="viewPep" aria-controls="viewPep" aria-selected="false" type="button">PEP por Plaza</button>
 </nav>
 
 <main id="viewCaptura" role="tabpanel" aria-labelledby="tabCaptura">
@@ -764,6 +817,38 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
     </div>
   </section>
   <div id="objRegions" style="display:grid;gap:22px"></div>
+</main>
+
+<!-- ======================= VISTA 5: PEP POR PLAZA (consulta) ======================= -->
+<main id="viewPep" role="tabpanel" aria-labelledby="tabPep" hidden>
+  <section class="panel national">
+    <div class="pep-bar">
+      <div class="pep-chips" role="group" aria-label="Región">
+        <button class="chip" type="button" data-pepreg="nat" aria-pressed="true">País</button>
+        <button class="chip" type="button" data-pepreg="cs" aria-pressed="false">Centro Sur</button>
+        <button class="chip" type="button" data-pepreg="nb" aria-pressed="false">Norte - Bajío</button>
+        <button class="chip" type="button" data-pepreg="pa" aria-pressed="false">Pacífico</button>
+      </div>
+      <label class="pipe-search" aria-label="Buscar plaza">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M7 1a6 6 0 0 1 4.7 9.7l3 3-1.4 1.4-3-3A6 6 0 1 1 7 1zm0 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+        <input id="pepSearch" type="search" placeholder="Buscar plaza…" autocomplete="off">
+      </label>
+      <label class="field" style="flex-direction:row;display:flex;align-items:center;gap:6px">Ordenar
+        <select id="pepSort">
+          <option value="e27">EBITDA 2027 (mayor a menor)</option>
+          <option value="up">Mayor crecimiento</option>
+          <option value="down">Mayor caída</option>
+          <option value="name">Plaza (A–Z)</option>
+        </select>
+      </label>
+      <span class="pep-unit" id="pepUnit"></span>
+      <button class="btn-light" id="btnPepExport" type="button">Exportar (CSV)</button>
+    </div>
+    <div class="pipe-cards" id="pepCards"></div>
+    <h3 class="sub-title">Plazas con mayor variación 2027 vs 2026</h3>
+    <div class="chart-box" id="pepChart"></div>
+  </section>
+  <div id="pepRegions" style="display:grid;gap:22px"></div>
 </main>
 
 <!-- ======================= DIÁLOGO DE LIMPIEZA ======================= -->
@@ -1053,7 +1138,7 @@ function loadUI() {
       histYear: CONFIG.HIST_YEARS.includes(+ui.histYear) ? +ui.histYear : def.histYear,
       metric: ['vol', 'ing', 'ebitda'].includes(ui.metric) ? ui.metric : def.metric,
       natRegion: (ui.natRegion === 'nat' || REGIONS.some(r => r.id === ui.natRegion)) ? ui.natRegion : def.natRegion,
-      view: ['viewCaptura', 'viewMensual', 'viewPipeline', 'viewPlaza'].includes(ui.view) ? ui.view : def.view,
+      view: ['viewCaptura', 'viewMensual', 'viewPipeline', 'viewPlaza', 'viewPep'].includes(ui.view) ? ui.view : def.view,
       profile: ['trend', 'real', 'flat'].includes(ui.profile) ? ui.profile : def.profile,
       mRegion: (ui.mRegion === 'nat' || REGIONS.some(r => r.id === ui.mRegion)) ? ui.mRegion : def.mRegion
     };
@@ -1086,7 +1171,9 @@ function updateStatus() {
   else if (state.savedAt) {
     const d = new Date(state.savedAt);
     const who = state.savedBy ? ' · ' + state.savedBy.split(' ')[0] : '';
-    txt.textContent = 'Guardado ' + d.toLocaleDateString('es-MX') + ' ' + d.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }) + who;
+    const today = d.toDateString() === new Date().toDateString();
+    txt.textContent = 'Guardado ' + (today ? '' : d.toLocaleDateString('es-MX', { day: '2-digit', month: 'short' }) + ' ') + d.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }) + who;
+    el.title = 'Último guardado: ' + d.toLocaleString('es-MX') + (state.savedBy ? ' por ' + state.savedBy : '');
   } else txt.textContent = 'Sin información guardada';
 }
 
@@ -1803,8 +1890,9 @@ function switchView(id) {
   document.querySelectorAll('.viewtab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.view === id)));
   const bm = document.getElementById('btnMensual');
   if (bm) bm.setAttribute('aria-pressed', String(id === 'viewMensual'));
-  ['viewCaptura', 'viewMensual', 'viewPipeline', 'viewPlaza'].forEach(v => { document.getElementById(v).hidden = v !== id; });
+  ['viewCaptura', 'viewMensual', 'viewPipeline', 'viewPlaza', 'viewPep'].forEach(v => { document.getElementById(v).hidden = v !== id; });
   if (id === 'viewPlaza') renderObjetivos();
+  if (id === 'viewPep') renderPep();
   window.scrollTo(0, 0);
 }
 
@@ -2463,6 +2551,188 @@ function scheduleRefresh() {
 }
 
 /* =====================================================================
+   7g. PEP POR PLAZA (quinta pestaña · solo consulta)
+   EBITDA Col 2026 vs 2027 por plaza, del PEP 2027 (Resumen de proyecciones
+   por cluster). Las cifras viven en referencia.json → pepPlaza (miles de MXN).
+   ===================================================================== */
+let PEP_PLAZA = null;
+let pepFlt = { reg: 'nat', sort: 'e27', q: '' };
+
+const pepN = v => (v === null || v === undefined || !isFinite(v)) ? '—' : new Intl.NumberFormat('es-MX', { maximumFractionDigits: 0 }).format(Math.round(v));
+const pepS = v => (v > 0 ? '+' : '') + pepN(v);
+function pepVar(a, b) {
+  if (a === null || b === null) return null;
+  if (a <= 0) return null;                                  /* base cero o negativa: % no significativo */
+  return (b - a) / a;
+}
+function pepRows(reg) {
+  return ((PEP_PLAZA && PEP_PLAZA.plazas && PEP_PLAZA.plazas[reg]) || []).map(r => ({
+    reg, plaza: r.plaza, e26: +r.e26 || 0, e27: +r.e27 || 0, dv: (+r.e27 || 0) - (+r.e26 || 0)
+  }));
+}
+function pepAll() { return REGIONS.flatMap(r => pepRows(r.id)); }
+function pepTot(reg) {
+  const t = PEP_PLAZA && PEP_PLAZA.totales && PEP_PLAZA.totales[reg === 'nat' ? 'pais' : reg];
+  return t ? { e26: +t.e26, e27: +t.e27 } : null;
+}
+function pepSum(rows) { return rows.reduce((a, r) => ({ e26: a.e26 + r.e26, e27: a.e27 + r.e27 }), { e26: 0, e27: 0 }); }
+function pepSorted(rows) {
+  const q = normTxt(pepFlt.q).trim();
+  const out = q ? rows.filter(r => normTxt(r.plaza).includes(q)) : rows.slice();
+  const by = {
+    e27: (a, b) => b.e27 - a.e27,
+    up: (a, b) => b.dv - a.dv,
+    down: (a, b) => a.dv - b.dv,
+    name: (a, b) => a.plaza.localeCompare(b.plaza, 'es')
+  }[pepFlt.sort];
+  return out.sort(by);
+}
+function pepVarCell(a, b) {
+  const v = pepVar(a, b);
+  if (a === 0 && b === 0) return '<td class="calc">—</td>';
+  if (v === null) return `<td class="calc"><span class="ztag na" title="Base 2026 cero o negativa">n.s.</span></td>`;
+  const cls = v >= 0 ? 'ok' : v >= CONFIG.VAR_YELLOW ? 'warn' : 'bad';
+  return `<td class="calc${v < 0 ? ' neg' : ''}"><span class="sem ${cls}"></span>${(v > 0.0005 ? '+' : '') + fmt(v, 'pct')}</td>`;
+}
+
+/* ---------- tarjetas ---------- */
+function renderPepCards() {
+  const card = (name, color, reg, nat) => {
+    const t = pepTot(reg) || pepSum(reg === 'nat' ? pepAll() : pepRows(reg));
+    const v = pepVar(t.e26, t.e27);
+    const rows = reg === 'nat' ? pepAll() : pepRows(reg);
+    const neg = rows.filter(r => r.e27 < 0).length;
+    const s = pepSum(rows);
+    const off = Math.abs(s.e27 - t.e27) > 5 ? Math.round(s.e27 - t.e27) : 0;
+    return `<div class="pcard${nat ? ' nat' : ''}" style="--rc:${color}">
+      <div class="pc-top"><h4>${name}</h4><div class="pc-pct"><b class="${v !== null && v < 0 ? 'pep-down' : ''}">${v === null ? '—' : (v >= 0 ? '+' : '') + fmt(v, 'pct')}</b><span>vs 2026</span></div></div>
+      <div class="big">${pepN(t.e27)}<small>EBITDA 2027</small></div>
+      <div class="pc-meta2">2026: ${pepN(t.e26)} · Var. ${pepS(t.e27 - t.e26)}</div>
+      <div class="meta"><span>${rows.length} plazas${neg ? ` · ${neg} con EBITDA negativo` : ''}</span>
+        ${off ? `<span class="pep-flag">⚠ Suma de plazas 2027: ${pepN(s.e27)} (dif. ${pepS(off)})</span>` : ''}</div>
+    </div>`;
+  };
+  const regs = pepFlt.reg === 'nat' ? REGIONS : REGIONS.filter(r => r.id === pepFlt.reg);
+  document.getElementById('pepCards').innerHTML =
+    regs.map(r => card(r.name, r.hex, r.id, false)).join('') + (pepFlt.reg === 'nat' ? card('País', 'var(--navy)', 'nat', true) : '');
+}
+
+/* ---------- gráfica: plazas con mayor variación ---------- */
+function renderPepChart() {
+  const el = document.getElementById('pepChart');
+  const pool = (pepFlt.reg === 'nat' ? pepAll() : pepRows(pepFlt.reg)).filter(r => r.dv !== 0);
+  const ups = pool.filter(r => r.dv > 0).sort((a, b) => b.dv - a.dv).slice(0, 7);
+  const downs = pool.filter(r => r.dv < 0).sort((a, b) => a.dv - b.dv).slice(0, 7);
+  const rows = ups.concat(downs.reverse());
+  if (!rows.length) { el.innerHTML = '<p class="empty">Sin variaciones para mostrar.</p>'; return; }
+  const W = 1100, RH = 24, P = { t: 10, b: 10, l: 230, r: 20 };
+  const H = P.t + P.b + rows.length * RH;
+  const max = Math.max(...rows.map(r => Math.abs(r.dv)));
+  const mid = P.l + (W - P.l - P.r) / 2, half = (W - P.l - P.r) / 2 - 70;
+  const x = v => mid + v / max * half;
+  const regName = id => REGIONS.find(r => r.id === id).name;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Plazas con mayor variación de EBITDA 2027 vs 2026">`;
+  s += `<line x1="${mid}" x2="${mid}" y1="${P.t - 4}" y2="${H - P.b + 4}" stroke="#9AA3AF"/>`;
+  rows.forEach((r, i) => {
+    const y = P.t + i * RH, up = r.dv > 0;
+    const x1 = Math.min(x(0), x(r.dv)), w = Math.max(1.5, Math.abs(x(r.dv) - x(0)));
+    if (i === ups.length && ups.length) s += `<line x1="${P.l - 180}" x2="${W - 10}" y1="${y - 1}" y2="${y - 1}" stroke="#E3E7EC" stroke-dasharray="3 3"/>`;
+    s += `<text class="pep-pl" x="${P.l - 12}" y="${y + 16}" text-anchor="end">${escAttr(r.plaza)}${pepFlt.reg === 'nat' ? `<tspan class="pep-rg"> · ${regName(r.reg)}</tspan>` : ''}</text>`;
+    s += `<rect x="${x1.toFixed(1)}" y="${y + 4}" width="${w.toFixed(1)}" height="${RH - 8}" rx="3" fill="${up ? 'var(--navy)' : 'var(--red)'}"><title>${r.plaza}: ${pepN(r.e26)} → ${pepN(r.e27)} (${pepS(r.dv)})</title></rect>`;
+    s += `<text class="pep-vl${up ? '' : ' dn'}" x="${(up ? x(r.dv) + 6 : x(r.dv) - 6).toFixed(1)}" y="${y + 16}" text-anchor="${up ? 'start' : 'end'}">${pepS(r.dv)}</text>`;
+  });
+  el.innerHTML = s + '</svg>';
+}
+
+/* ---------- tablas por región ---------- */
+function pepDumbbell(r, lo, hi) {
+  const W = 240, pad = 4;
+  const x = v => pad + (v - lo) / (hi - lo || 1) * (W - pad * 2);
+  const z = x(0), b = x(r.e27), a = x(r.e26);
+  const neg = r.e27 < 0;
+  return `<svg class="pep-db" viewBox="0 0 ${W} 14" width="${W}" height="14" aria-hidden="true">
+    <line x1="${z.toFixed(1)}" x2="${z.toFixed(1)}" y1="0" y2="14" stroke="#C9CFD8"/>
+    <rect x="${Math.min(z, b).toFixed(1)}" y="3" width="${Math.max(1, Math.abs(b - z)).toFixed(1)}" height="8" rx="2" fill="${neg ? 'var(--red)' : 'var(--rc)'}"/>
+    <line x1="${a.toFixed(1)}" x2="${a.toFixed(1)}" y1="0" y2="14" stroke="var(--ink)" stroke-width="2"/></svg>`;
+}
+function renderPepRegion(reg, lo, hi) {
+  const r = REGIONS.find(x => x.id === reg);
+  const all = pepRows(reg), rows = pepSorted(all);
+  const off = pepTot(reg), s = pepSum(all);
+  const base27 = s.e27 || 0;   /* participación sobre la suma de plazas */
+  const neg = v => v < 0 ? ' class="neg"' : '';
+  let h = `<section class="panel pipe-region" style="--rc:${r.hex}" aria-labelledby="pepH-${reg}">
+    <div class="panel-head"><h2 id="pepH-${reg}"><span class="regdot" style="background:${r.hex}"></span>${r.name}</h2></div>
+    <div class="scroll-x"><table class="pztable pept"><thead><tr>
+      <th>Plaza</th><th>EBITDA 2026</th><th>EBITDA 2027</th><th>Var.</th><th>Var. %</th>
+      <th class="pep-dbh">2026 <i class="pep-tick"></i> → 2027 <i class="pep-sw" style="background:${r.hex}"></i></th><th>% de la región 2027<small>sobre suma de plazas</small></th>
+    </tr></thead><tbody>`;
+  h += rows.length ? rows.map(p => `<tr${p.e27 < 0 ? ' class="pep-negrow"' : ''}>
+      <td class="plz">${escAttr(p.plaza)}</td>
+      <td${neg(p.e26)}>${pepN(p.e26)}</td><td${neg(p.e27)}><b>${pepN(p.e27)}</b></td>
+      <td class="calc${p.dv < 0 ? ' neg' : ''}">${p.dv ? pepS(p.dv) : '—'}</td>${pepVarCell(p.e26, p.e27)}
+      <td class="pep-dbc">${pepDumbbell(p, lo, hi)}</td>
+      <td class="calc">${base27 && p.e27 > 0 ? fmt(p.e27 / base27, 'pct') : '—'}</td></tr>`).join('')
+    : '<tr><td colspan="7" style="text-align:left;color:var(--muted)">Ninguna plaza coincide con la búsqueda.</td></tr>';
+  h += '</tbody><tfoot>';
+  if (off && (Math.abs(off.e26 - s.e26) > 5 || Math.abs(off.e27 - s.e27) > 5)) {
+    h += `<tr class="pep-sum"><td>Suma de plazas</td><td>${pepN(s.e26)}</td><td>${pepN(s.e27)}</td><td>${pepS(s.e27 - s.e26)}</td>${pepVarCell(s.e26, s.e27)}<td></td><td>100.0 %</td></tr>`;
+    h += `<tr class="pep-adj"><td>Diferencia vs total PEP</td><td>${pepS(off.e26 - s.e26)}</td><td>${pepS(off.e27 - s.e27)}</td><td colspan="4">No asignado a plazas en la fuente</td></tr>`;
+  }
+  const t = off || s;
+  h += `<tr class="tot"><td>Total ${r.name}${off ? ' (PEP)' : ''}</td><td${neg(t.e26)}>${pepN(t.e26)}</td><td${neg(t.e27)}>${pepN(t.e27)}</td><td>${pepS(t.e27 - t.e26)}</td>${pepVarCell(t.e26, t.e27)}<td></td><td>${off && (Math.abs(off.e26 - s.e26) > 5 || Math.abs(off.e27 - s.e27) > 5) ? '' : '100.0 %'}</td></tr>`;
+  return h + '</tfoot></table></div></section>';
+}
+
+function renderPep() {
+  const box = document.getElementById('pepRegions');
+  if (!box) return;
+  if (!PEP_PLAZA) {
+    document.getElementById('pepCards').innerHTML = '';
+    document.getElementById('pepChart').innerHTML = '<p class="empty">Falta actualizar referencia.json en el repositorio de datos.</p>';
+    box.innerHTML = '';
+    return;
+  }
+  document.getElementById('pepUnit').textContent = `${PEP_PLAZA.metrica || 'EBITDA'} · ${PEP_PLAZA.unidad || ''}`;
+  renderPepCards();
+  renderPepChart();
+  const vals = pepAll().flatMap(r => [r.e26, r.e27]);
+  const lo = Math.min(0, ...vals), hi = Math.max(0, ...vals);
+  const regs = pepFlt.reg === 'nat' ? REGIONS : REGIONS.filter(r => r.id === pepFlt.reg);
+  box.innerHTML = regs.map(r => renderPepRegion(r.id, lo, hi)).join('');
+}
+
+function exportPepCSV() {
+  const esc = v => { const s = (v === null || v === undefined) ? '' : String(v); return /[",\n;]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+  const lines = [['Región', 'Plaza', 'EBITDA 2026', 'EBITDA 2027', 'Variación', 'Var. %'].map(esc).join(',')];
+  REGIONS.forEach(r => pepRows(r.id).forEach(p => {
+    const v = pepVar(p.e26, p.e27);
+    lines.push([r.name, p.plaza, p.e26, p.e27, p.dv, v === null ? '' : (v * 100).toFixed(1)].map(esc).join(','));
+  }));
+  const blob = new Blob(['\uFEFF' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `PEP_por_Plaza_${CONFIG.BUDGET_YEAR}.csv`;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  toast('PEP por plaza exportado a CSV.');
+}
+
+function bindPep() {
+  const view = document.getElementById('viewPep');
+  view.addEventListener('click', e => {
+    const chip = e.target.closest('[data-pepreg]');
+    if (!chip) return;
+    pepFlt.reg = chip.dataset.pepreg;
+    view.querySelectorAll('[data-pepreg]').forEach(c => c.setAttribute('aria-pressed', String(c === chip)));
+    renderPep();
+  });
+  document.getElementById('pepSort').addEventListener('change', e => { pepFlt.sort = e.target.value; renderPep(); });
+  document.getElementById('pepSearch').addEventListener('input', e => { pepFlt.q = e.target.value; renderPep(); });
+  document.getElementById('btnPepExport').addEventListener('click', exportPepCSV);
+}
+
+/* =====================================================================
    8. CAPTURA: validación, foco, teclado y pegado desde Excel
    ===================================================================== */
 function isCell(el) { return el && el.classList && el.classList.contains('cell'); }
@@ -2650,6 +2920,7 @@ function init() {
   buildHistControls();
   bindVarSteppers();
   bindObjetivos();
+  bindPep();
   bindPipeline();
   bindMonthly();
   renderMixLegend();
@@ -3023,6 +3294,7 @@ function applyReference(ref) {
   SEASON_EST = ref.seasonEst || {};
   PIPE_SEEDS = Array.isArray(ref.pipeSeeds) ? ref.pipeSeeds : [];
   OBJ_SEEDS = Array.isArray(ref.objSeeds) ? ref.objSeeds : [];
+  PEP_PLAZA = ref.pepPlaza && ref.pepPlaza.plazas ? ref.pepPlaza : null;
   if (ref.histMonths) Object.keys(ref.histMonths).forEach(y => { CONFIG.HIST_MONTHS[y] = +ref.histMonths[y]; });
 }
 
@@ -3051,7 +3323,9 @@ function showLogin(msg) {
 function hideLogin() {
   document.getElementById('login').hidden = true;
   document.body.classList.remove('locked');
-  document.getElementById('whoName').textContent = sync.user;
+  const who = document.getElementById('whoName');
+  who.textContent = sync.user.replace(/\(.*?\)/g, '').split(' ').filter(w => /^[A-ZÁÉÍÓÚÑ]/.test(w)).slice(0, 2).map(w => w[0]).join('');
+  who.title = sync.user;
 }
 
 /** Carga referencia y datos; la primera vez crea presupuesto.json */
