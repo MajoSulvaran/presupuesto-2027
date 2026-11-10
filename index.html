@@ -542,6 +542,59 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
 .status{font-size:11.5px;margin-right:4px;white-space:nowrap}
 .viewtab{padding:8px 16px 6px;font-size:13.5px}
 @media (max-width:900px){.topbar{flex-wrap:wrap}.actions{flex-wrap:wrap}.status{width:auto}}
+/* ======================= AJUSTE A PANTALLA (zoom 100 %) ======================= */
+main{max-width:1920px;padding:12px 16px 40px;gap:14px}
+.panel{padding:12px 14px 14px}
+.panel-head{margin-bottom:8px;gap:8px}
+.panel h2{font-size:16.5px}
+.panel h3.sub-title{font-size:14px;margin:14px 0 8px}
+.kpis{gap:12px}
+.kpi{padding:11px 14px 10px}
+.kpi .value{font-size:clamp(18px,1.7vw,24px);margin:3px 0 1px}
+.mix{margin-top:8px}
+.tool-head{justify-content:flex-end}
+.field.inline,.chart-head .field,#viewCaptura .hist-tools .field{flex-direction:row;display:flex;align-items:center;gap:6px}
+.chart-head{margin-top:6px}
+.tool-row{align-items:center;margin:0}
+.tool-row .btn-light{margin-left:auto}
+.btn-light{padding:5px 11px;font-size:12.5px}
+/* Tarjetas resumen más bajas */
+.pipe-cards{gap:10px;margin-bottom:10px}
+.pcard{padding:9px 12px}
+.pcard h4{font-size:13.5px;margin:0 0 2px}
+.pcard .big{font-size:19px}
+.pc-pct b{font-size:20px}
+.pcard .meta{font-size:11.5px;margin-top:2px}
+.pc-meta2{font-size:11.5px}
+.pipe-bar{padding:7px 10px;gap:8px 12px}
+.pipe-region .panel-head{margin-bottom:6px}
+/* Tablas: sin anchos mínimos forzados */
+table.grid{min-width:0}
+.grid th.rowlabel{min-width:150px;padding:0 10px}
+.grid input.cell{min-width:90px;padding:0 10px}
+.grid td.calc{min-width:80px;padding:0 10px}
+.grid tr.ro td.val{min-width:90px;padding:0 10px}
+.grid thead th{padding:5px 10px}
+.mtable{min-width:0;font-size:11.5px}
+.mtable th,.mtable td{padding:3px 5px}
+.pztable{min-width:0}
+.objt td.in input{width:92px}
+.objt td.plz input{width:130px;min-width:0}
+.objt td.cmt input{width:100%;min-width:140px}
+.objt th.cmt-h{min-width:140px;width:100%}
+.objt{width:100%}
+.objt td.cmt{width:100%}
+.objt th,.objt td{min-width:0}
+.objt td.plz,.objt th:first-child{min-width:130px}
+.ptable{min-width:0}
+.ptable input.pf.name{min-width:150px!important}
+.ptable input.pf.cli{min-width:100px!important}
+.ptable input.pf[data-f="comentario"]{min-width:150px!important}
+.ptable input.pf[data-f="plaza"]{min-width:80px!important}
+.ptable input.pf.num{min-width:50px!important}
+.pept{min-width:0}
+.pep-db{width:180px}
+@media (max-width:1100px){.mtable{min-width:1100px}}
 </style>
 </head>
 <body class="locked">
@@ -552,7 +605,7 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
     <div class="brand">
       <div class="mark" aria-hidden="true"><span></span><span></span><span></span></div>
       <div>
-        <h2 id="loginTitle">Presupuesto 2027</h2>
+        <h2 id="loginTitle">Presupuesto 2027 · Soluciones</h2>
         <p class="lead">Soluciones Integrales</p>
       </div>
     </div>
@@ -577,7 +630,7 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
   <div class="brand">
     <div class="mark" aria-hidden="true"><span></span><span></span><span></span></div>
     <div>
-      <h1>Presupuesto 2027</h1>
+      <h1>Presupuesto 2027 · Soluciones</h1>
       <p>Soluciones Integrales <span class="print-only" id="printDate"></span></p>
     </div>
   </div>
@@ -595,6 +648,10 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
     <button class="btn" id="btnExport" type="button" data-icon="1" title="Exportar a Excel (CSV)">
       <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M7 1h2v7.6l2.3-2.3 1.4 1.4L8 12.4 3.3 7.7l1.4-1.4L7 8.6V1zM2 13h12v2H2z"/></svg>
       <span class="sr">Exportar a Excel (CSV)</span>
+    </button>
+    <button class="btn" id="btnBackup" type="button" data-icon="1" title="Descargar respaldo completo (captura, pipeline, objetivos y referencia)">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M2 2h12v3H2V2zm1 4h10v8H3V6zm3 2v1.5h4V8H6z"/></svg>
+      <span class="sr">Respaldo completo</span>
     </button>
     <button class="btn" id="btnPrint" type="button" data-icon="1" title="Imprimir / PDF">
       <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4 1h8v4H4V1zM2 6h12a1 1 0 0 1 1 1v5h-3v3H4v-3H1V7a1 1 0 0 1 1-1zm3 5v3h6v-3H5z"/></svg>
@@ -743,17 +800,16 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
 <!-- ======================= VISTA 2: PRESUPUESTO 2027 MENSUAL (RESULTADO) ======================= -->
 <main id="viewMensual" role="tabpanel" aria-label="Presupuesto 2027 mensual" hidden>
   <section class="panel national">
-    <div class="panel-head">
-      <div></div>
+    <div class="panel-head tool-head">
       <div class="hist-tools">
-        <label class="field">Perfil de mensualización
+        <label class="field inline">Perfil de mensualización
           <select id="mProfile">
             <option value="trend">Tendencia lineal (6.67 % → 9.99 %)</option>
             <option value="real">Estacionalidad real 2024–2026</option>
             <option value="flat">Uniforme (1/12)</option>
           </select>
         </label>
-        <button class="btn-light" id="btnExportMonthly" type="button">Exportar mensual (CSV)</button>
+        <button class="btn-light" id="btnExportMonthly" type="button">Exportar (CSV)</button>
       </div>
     </div>
     <div class="scroll-x" id="monthlyTable"></div>
@@ -776,12 +832,6 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
 <!-- ======================= VISTA 3: PIPELINE PROYECTOS ANCLA ======================= -->
 <main id="viewPipeline" role="tabpanel" aria-labelledby="tabPipeline" hidden>
   <section class="panel national">
-    <div class="panel-head">
-      <div></div>
-      <div class="hist-tools">
-        <button class="btn-light" id="btnPipeExport" type="button">Exportar pipeline (CSV)</button>
-      </div>
-    </div>
     <div class="pipe-cards" id="pipeCards"></div>
     <div class="pipe-bar">
       <label class="pipe-search" aria-label="Buscar">
@@ -794,6 +844,7 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
           <select id="pipeStatus"></select>
         </label>
         <button class="chip" type="button" data-flt="star" aria-pressed="false">★ Presentación VP</button>
+        <button class="btn-light" id="btnPipeExport" type="button">Exportar (CSV)</button>
       </div>
     </div>
   </section>
@@ -803,17 +854,12 @@ dialog::backdrop{background:rgba(20,20,184,.45)}
 <!-- ======================= VISTA 4: OBJETIVOS POR PLAZA ======================= -->
 <main id="viewPlaza" role="tabpanel" aria-labelledby="tabPlaza" hidden>
   <section class="panel national">
-    <div class="panel-head">
-      <div></div>
-      <div class="hist-tools">
-        <button class="btn-light" id="btnObjExport" type="button">Exportar objetivos (CSV)</button>
-      </div>
-    </div>
     <div class="pipe-cards" id="objCards"></div>
-    <div class="legend">
+    <div class="legend tool-row">
       <span><i class="lg-in"></i>Captura manual</span>
       <span><i class="lg-calc"></i>Cálculo automático</span>
       <span><i class="lg-nat"></i>Total región</span>
+      <button class="btn-light" id="btnObjExport" type="button">Exportar (CSV)</button>
     </div>
   </section>
   <div id="objRegions" style="display:grid;gap:22px"></div>
@@ -2884,6 +2930,20 @@ function exportCSV() {
 /* =====================================================================
    10. IMPRIMIR, LIMPIAR Y AVISOS
    ===================================================================== */
+/** Respaldo completo en JSON: lo capturado (presupuesto.json) y las cifras de referencia */
+async function exportBackup() {
+  if (isCell(document.activeElement)) commitCell(document.activeElement);
+  let referencia = null;
+  try { const r = await ghGet(GH.REF_PATH); if (r.status === 200) referencia = JSON.parse(r.text); } catch (err) { /* sin acción */ }
+  const data = { _respaldo: 'Presupuesto 2027', _exportado: new Date().toISOString(), _por: sync.user, presupuesto: clone(state), referencia };
+  const blob = new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `Respaldo_Presupuesto_2027_${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  toast(referencia ? 'Respaldo completo descargado.' : 'Respaldo descargado (sin referencia.json: no se pudo leer).', referencia ? '' : 'warn');
+}
 function printReport() {
   if (isCell(document.activeElement)) document.activeElement.blur();
   document.getElementById('printDate').textContent = '| Impreso ' + new Date().toLocaleString('es-MX');
@@ -2930,6 +2990,7 @@ function init() {
 
   document.getElementById('btnSave').addEventListener('click', () => saveState());
   document.getElementById('btnExport').addEventListener('click', exportCSV);
+  document.getElementById('btnBackup').addEventListener('click', exportBackup);
   document.getElementById('btnPrint').addEventListener('click', printReport);
   document.getElementById('btnClear').addEventListener('click', openClearDialog);
   document.getElementById('btnHistRestore').addEventListener('click', () => {
