@@ -115,7 +115,7 @@ body.locked > :not(#login):not(#toast){visibility:hidden}
 .status.busy .dot{background:#8FB4FF;animation:pulse 1s ease-in-out infinite}
 .status.off .dot{background:var(--bad)}
 @keyframes pulse{50%{opacity:.35}}
-/* Captura y análisis en solo lectura (usuarios sin permiso de edición) */
+/* Ppto 2027 en solo lectura (usuarios sin permiso de edición) */
 .ro-banner{display:flex;gap:10px;align-items:center;background:#FFF8E5;border:1px solid #F1D48A;color:#5C4A12;border-radius:var(--radius);padding:10px 14px;font-size:13px}
 .ro-banner[hidden]{display:none}
 .ro-banner b{color:#3E3209}
@@ -230,7 +230,7 @@ table.grid{border-collapse:separate;border-spacing:0;width:100%;min-width:1080px
 .viewtab[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--red)}
 main[hidden]{display:none}
 main > *,#pipeRegions > *{min-width:0}  /* evita que tablas anchas desborden la página */
-/* ---------- Pipeline Proyectos Ancla ---------- */
+/* ---------- Proyectos Ancla ---------- */
 #viewPipeline,#viewPlaza{max-width:none}
 .pztable{border-collapse:collapse;width:100%;min-width:1100px;font-size:13.5px;font-variant-numeric:tabular-nums}
 .pztable thead th{background:var(--navy);color:#fff;font-size:12px;font-weight:600;padding:10px 12px;text-align:right;white-space:nowrap}
@@ -596,6 +596,16 @@ table.grid{min-width:0}
 .pep-db{width:180px}
 @media (max-width:1100px){.mtable{min-width:1100px}}
 </style>
+<script>if (/[?&]embebido=1/.test(location.search)) document.documentElement.classList.add('embebido');</script>
+<style>
+.embebido .topbar{display:none!important}
+.embebido .viewtabs{top:0!important;padding:0 14px}
+.embebido .emb-acc{margin-left:auto;display:flex;gap:6px;align-items:center;padding:4px 0}
+.embebido .emb-acc .btn{background:#fff;color:var(--navy);border:1px solid var(--line);padding:5px 10px;font-size:12px;box-shadow:none}
+.embebido .emb-acc .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.embebido .emb-acc .btn svg{width:13px;height:13px}
+.embebido .emb-acc .status{color:var(--muted);font-size:11.5px}
+</style>
 </head>
 <body class="locked">
 
@@ -667,14 +677,13 @@ table.grid{min-width:0}
 
 <!-- ======================= PESTAÑAS PRINCIPALES ======================= -->
 <nav class="viewtabs" role="tablist" aria-label="Vistas">
-  <button class="viewtab" role="tab" id="tabCaptura" data-view="viewCaptura" aria-controls="viewCaptura" aria-selected="true" type="button">Captura y análisis</button>
-  <button class="viewtab" role="tab" id="tabPipeline" data-view="viewPipeline" aria-controls="viewPipeline" aria-selected="false" type="button">Pipeline Proyectos Ancla</button>
+  <button class="viewtab" role="tab" id="tabCaptura" data-view="viewCaptura" aria-controls="viewCaptura" aria-selected="true" type="button">Ppto 2027</button>
+  <button class="viewtab" role="tab" id="tabPipeline" data-view="viewPipeline" aria-controls="viewPipeline" aria-selected="false" type="button">Proyectos Ancla</button>
   <button class="viewtab" role="tab" id="tabPlaza" data-view="viewPlaza" aria-controls="viewPlaza" aria-selected="false" type="button">Objetivos por Plaza</button>
-  <button class="viewtab" role="tab" id="tabPep" data-view="viewPep" aria-controls="viewPep" aria-selected="false" type="button">PEP por Plaza</button>
 </nav>
 
 <main id="viewCaptura" role="tabpanel" aria-labelledby="tabCaptura">
-  <div class="ro-banner no-print" id="capturaLock" hidden role="note">🔒 <span>Solo lectura. La captura y el análisis los edita <b id="capturaEditor"></b>. Puedes consultar todo y trabajar en <b>Pipeline Proyectos Ancla</b> y <b>Objetivos por Plaza</b>.</span></div>
+  <div class="ro-banner no-print" id="capturaLock" hidden role="note">🔒 <span>Solo lectura. La captura y el análisis los edita <b id="capturaEditor"></b>. Puedes consultar todo y trabajar en <b>Proyectos Ancla</b> y <b>Objetivos por Plaza</b>.</span></div>
   <!-- ======================= TARJETAS RESUMEN ======================= -->
   <section class="kpis" aria-label="Resumen nacional 2027">
     <article class="kpi">
@@ -950,7 +959,7 @@ const REGIONS = [
   { id: 'pa', name: 'Pacífico',      hex: '#6F7A8C' }
 ];
 
-/* Catálogos del Pipeline Proyectos Ancla (definidos aquí porque se usan al cargar los datos) */
+/* Catálogos del Proyectos Ancla (definidos aquí porque se usan al cargar los datos) */
 const PIPE_STATUS = [
   { id: 'prospecto',   label: 'Prospecto' },
   { id: 'proyecto',    label: 'Proyecto' },
@@ -1184,7 +1193,7 @@ function loadUI() {
       histYear: CONFIG.HIST_YEARS.includes(+ui.histYear) ? +ui.histYear : def.histYear,
       metric: ['vol', 'ing', 'ebitda'].includes(ui.metric) ? ui.metric : def.metric,
       natRegion: (ui.natRegion === 'nat' || REGIONS.some(r => r.id === ui.natRegion)) ? ui.natRegion : def.natRegion,
-      view: ['viewCaptura', 'viewMensual', 'viewPipeline', 'viewPlaza', 'viewPep'].includes(ui.view) ? ui.view : def.view,
+      view: ['viewCaptura', 'viewMensual', 'viewPipeline', 'viewPlaza'].includes(ui.view) ? ui.view : def.view,
       profile: ['trend', 'real', 'flat'].includes(ui.profile) ? ui.profile : def.profile,
       mRegion: (ui.mRegion === 'nat' || REGIONS.some(r => r.id === ui.mRegion)) ? ui.mRegion : def.mRegion
     };
@@ -2097,7 +2106,7 @@ function renderPipeSummary() {
         <div class="pc-pct"><b>${cov === null ? '—' : fmt(cov, 'pct')}</b><span>de la meta 2027</span></div>
       </div>
       <div class="big">${n1(t.pptoVol)}<small>K m³ proyectos ancla</small></div>
-      <div class="pc-meta2">${meta === null ? 'Sin meta de volumen capturada en Captura y análisis' : `vs ${n1(meta)} K m³ meta 2027 (Captura y análisis)`}</div>
+      <div class="pc-meta2">${meta === null ? 'Sin meta de volumen capturada en Ppto 2027' : `vs ${n1(meta)} K m³ meta 2027 (Ppto 2027)`}</div>
       <div class="cov"><div class="bar"><span style="width:${w}%"></span></div></div>
       <div class="meta"><span>${t.n} proyectos · ${t.vp} para VP${t.n - t.ppto ? ` · ${t.n - t.ppto} perdido${t.n - t.ppto === 1 ? '' : 's'} (no cuenta)` : ''}</span>
         <span>Venta $${n1(t.venta)} M · Margen ${t.margen === null ? '—' : n1(t.margen) + '%'} · EBITDA ${t.ebitda === null ? '—' : '$' + n1(t.ebitda) + ' M'}</span></div>
@@ -2117,8 +2126,8 @@ function renderPipeSummary() {
     const bv = calc(getBlock('budget', r.id)).vol;
     const meta = bv ? bv / 1000 : null;
     el.innerHTML = meta === null
-      ? `<span class="pi-txt">Sin meta de volumen capturada en Captura y análisis</span>`
-      : `<b>${fmt(t.pptoVol / meta, 'pct')}</b> de la meta 2027 <span class="pi-txt">= ${n1(t.pptoVol)} K m³ proyectos ancla vs ${n1(meta)} K m³ meta 2027 (Captura y análisis)</span>`;
+      ? `<span class="pi-txt">Sin meta de volumen capturada en Ppto 2027</span>`
+      : `<b>${fmt(t.pptoVol / meta, 'pct')}</b> de la meta 2027 <span class="pi-txt">= ${n1(t.pptoVol)} K m³ proyectos ancla vs ${n1(meta)} K m³ meta 2027 (Ppto 2027)</span>`;
   });
   document.getElementById('pipeCards').innerHTML = html;
 
@@ -2293,13 +2302,13 @@ function objFootHTML(reg) {
     <td>${pv ? fmt(pv, 'vol0') : '—'}</td><td>${cov === null ? '—' : fmt(cov, 'pct')}</td><td></td><td></td></tr>`;
 }
 
-/** Cuadre: suma de objetivos de plaza vs meta regional de la pestaña Captura y análisis */
+/** Cuadre: suma de objetivos de plaza vs meta regional de la pestaña Ppto 2027 */
 function objReconHTML(reg) {
   const t = objTotals(state.plazaObj[reg]);
   const c = calc(getBlock('budget', reg));
-  if (c.vol === null && c.ebitda === null) return 'Sin meta capturada en Captura y análisis para cuadrar.';
+  if (c.vol === null && c.ebitda === null) return 'Sin meta capturada en Ppto 2027 para cuadrar.';
   const part = (a, b, f) => (a === null || !b) ? '—' : `${f(a)} de ${f(b)} (<b>${fmt(a / b, 'pct')}</b>)`;
-  return `Cuadre vs meta regional (Captura y análisis): volumen ${part(t.objVol, c.vol, v => fmt(v, 'vol0') + ' m³')} · EBITDA ${part(t.objEb, c.ebitda, v => fmt(v, 'mxn0'))}`;
+  return `Cuadre vs meta regional (Ppto 2027): volumen ${part(t.objVol, c.vol, v => fmt(v, 'vol0') + ' m³')} · EBITDA ${part(t.objEb, c.ebitda, v => fmt(v, 'mxn0'))}`;
 }
 
 function renderObjRegion(reg) {
@@ -3049,7 +3058,7 @@ const USERS = [
   'María Fernanda Ramírez Castillo'
 ];
 
-/* Quién puede editar la pestaña "Captura y análisis" (presupuesto 2027 por región,
+/* Quién puede editar la pestaña "Ppto 2027" (presupuesto 2027 por región,
    histórico y comparativo). Los demás la ven en solo lectura. Para agregar a
    alguien, escribe su nombre exactamente como aparece en USERS. */
 const EDITORES_CAPTURA = [
@@ -3071,7 +3080,7 @@ const sync = {
   needsRender: false, lastFrom: null, booted: false
 };
 
-/* ---------- candado de Captura y análisis ---------- */
+/* ---------- candado de Ppto 2027 ---------- */
 function applyCapturaLock() {
   const view = document.getElementById('viewCaptura');
   if (!view) return;
@@ -3084,7 +3093,7 @@ function applyCapturaLock() {
   view.querySelectorAll('input.cell').forEach(i => { i.readOnly = true; });
   view.querySelectorAll('.st-btn, .st-in').forEach(el => { el.disabled = true; });
 }
-function lockMsg() { toast(`Solo ${EDITORES_CAPTURA.join(', ')} puede modificar Captura y análisis.`, 'warn'); }
+function lockMsg() { toast(`Solo ${EDITORES_CAPTURA.join(', ')} puede modificar Ppto 2027.`, 'warn'); }
 /* Bloqueos de respaldo: aunque un control quedara activo, no se modifica el dato */
 (function guardCaptura() {
   const _commit = commitCell, _adjust = adjustBudget, _clear = clearData;
@@ -3484,6 +3493,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.ResizeObserver) new ResizeObserver(setH).observe(tb); else window.addEventListener('resize', setH);
 });
 document.addEventListener('DOMContentLoaded', startApp);
+</script>
+<script>
+if (document.documentElement.classList.contains('embebido')) {
+  const nav = document.querySelector('.viewtabs'), box = document.createElement('div');
+  box.className = 'emb-acc';
+  ['status', 'btnMensual', 'btnSave', 'btnExport'].forEach(id => { const el = document.getElementById(id); if (el) box.appendChild(el); });
+  if (nav) nav.appendChild(box);
+}
 </script>
 </body>
 </html>
